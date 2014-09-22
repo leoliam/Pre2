@@ -8,21 +8,21 @@ DJANGO_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
+    )
+
+THIRD_PARTY_APPS= ( 
+    'south',
+    'django_extensions',
+    )
+
+LOCAL_APPS = (
     'apps.inicio',
     'apps.logistica',
     'apps.rr_hh',
     'apps.plantillas',
     'apps.solicitudes',
-    'apps',
-    )
-
-THIRD_PARTY_APPS= ( 
-    'south',
-    )
-
-LOCAL_APPS = (
-
+    #'apps',
     )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

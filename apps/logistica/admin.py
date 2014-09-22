@@ -9,7 +9,7 @@ class AreaAdmin(admin.ModelAdmin):
 	search_fields=('area_nom',)
 
 class ServicioAdmin(admin.ModelAdmin):
-	list_display=('servi_id','servi_nom','servi_descripcion','area')	
+	list_display=('id','servi_nom','servi_descripcion','area')	
 	list_filter=('servi_costo','area')	
 	search_fields=('servi_nom',)
 	list_editable=('servi_nom','area',)

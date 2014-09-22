@@ -3,7 +3,6 @@ from apps.logistica.models import Cargo
 from apps.logistica.models import Servicio
 
 class Empleado(models.Model):
-    emp_id = models.AutoField(primary_key=True)
     emp_nom = models.CharField(max_length=100)
     emp_ape = models.CharField(max_length=100)
     emp_fecnac = models.DateField()
@@ -18,6 +17,7 @@ class Empleado(models.Model):
     emp_esta = models.IntegerField()
     cargo = models.ForeignKey(Cargo, blank=True, null=True)
     emp_fecreg = models.DateField(blank=True, null=True)
+    servi_emp = models.ManyToManyField(Servicio, through='ServicioEmpleado')
     def __unicode__(self):
         return self.emp_nom 
 
@@ -26,15 +26,14 @@ class ServicioEmpleado(models.Model):
     emp = models.ForeignKey(Empleado)
     progra_estado = models.IntegerField()
     
-#class Programacion(models.Model):
-#prog_id = models.AutoField(primary_key=True)
-#servi_id= models.ForeignKey(ServicioEmpleado , db_column='servi')
-#emp_id = models.ForeignKey(ServicioEmpleado, db_column='emp')
-#hor_fecha = models.DateField()
-#h#or_ing = models.TimeField(blank=True, null=True)
-#hor_sal = models.TimeField(blank=True, null=True)
-#hor_anotacion = models.TextField(blank=True)
-#hor_turno = models.CharField(max_length=3)
-#minutosdatencion = models.IntegerField()
-    
+class Programacion(models.Model):
+    prog_id = models.AutoField(primary_key=True)
+    servi_id= models.ForeignKey(ServicioEmpleado)
+    hor_fecha = models.DateField()
+    hor_ing = models.TimeField(blank=True, null=True)
+    hor_sal = models.TimeField(blank=True, null=True)
+    hor_anotacion = models.TextField(blank=True)
+    hor_turno = models.CharField(max_length=3)
+    minutosdatencion = models.IntegerField()
+
     

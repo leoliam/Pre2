@@ -1,5 +1,289 @@
-<form method="POST">
-	{% csrf_token %}
-	{{form.as_p}}
-	<input type="submit" value="Registrar">
-</form>
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-edit fa-fw "></i> 
+				Pacientes
+			<span>> 
+				Registro de Pacientes
+			</span>
+		</h1>
+	</div>
+</div>
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- START ROW -->
+
+	<div class="row">
+
+		<!-- NEW COL START -->
+		<article class="col-sm-12 col-md-12 col-lg-6">
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Registro de Paciente Nuevo </h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+
+						<form method="POST" class="smart-form" id = "post-form">
+							<header>
+								Registro de Paciente Nuevo
+							</header>
+							
+							<fieldset>	
+							{% csrf_token %}							
+								<section>
+									<label class="label">Nombres:</label>
+									<label class="input">
+										{{form.pac_nombre}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Apellidos:</label>
+									<label class="input">
+										{{form.pac_apellido}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Seleccione Sexo</label>
+									<label class="select">
+									{{form.pac_sexo}}
+									</label>
+								</section>
+								<section>
+									<label class="label">DNI</label>
+									<label class="input">
+										{{form.DNI}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Telefono</label>
+									<label class="input">
+										{{form.pac_telefono}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Direccion</label>
+									<label class="input">
+										{{form.pac_direccion}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Fecha de Nacimiento</label>
+									<label class="input">
+										{{form.pac_fecnac}}
+									</label>
+								</section>
+								<section>
+									<label class="label">Observaciones</label>
+									<label class="textarea textarea-expandable"> 							{{form.pac_obs}}				
+									</label>
+									<div class="note">
+										<strong>Note:</strong> expands on focus.
+									</div>
+								</section>								
+							</fieldset>		
+							<div id="results"></div>							
+							<footer>
+								<button type="submit"  class="btn btn-primary">
+									Guardar
+								</button>
+								<button type="button" class="btn btn-default" onclick="window.history.back();">
+									Regresar
+								</button>
+							</footer>
+						</form>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+		</article>
+		<!-- END COL -->
+		
+	</div>
+
+	<!-- END ROW-->
+	
+</section>
+<script >
+
+	$('#post-form').on('submit', function(event){
+    event.preventDefault();     
+    create_post();});
+    function create_post() { 
+    $.ajax({
+        url: '/create-post/',
+        type : "POST",
+        data : $('#post-form').serialize(), 
+        success : function(json) 
+        {
+            if (json.errors)
+            {
+            	if(json.errors.pac_nombre)
+            	{
+            		alert(json.errors.pac_nombre);
+            	}
+            	if(json.errors.DNI)
+            	{
+            		alert(json.errors.DNI);
+            	}
+
+            }
+            else
+            {
+            	alert(json.result);
+            }
+            console.log(json);
+            console.log(json.errors); // log the returned json to the console
+            console.log("success"); // another sanity check
+        }
+    });
+};
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+ function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+function sameOrigin(url) {
+    // test that a given url is a same-origin URL
+    // url could be relative or scheme relative or absolute
+    var host = document.location.host; // host + port
+    var protocol = document.location.protocol;
+    var sr_origin = '//' + host;
+    var origin = protocol + sr_origin;
+    // Allow absolute or scheme relative URLs to same origin
+    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+            // Send the token to same-origin, relative URLs only.
+            // Send the token only if the method warrants CSRF protection
+            // Using the CSRFToken value acquired earlier
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+</script>
+<!-- end widget grid -->
+
+<!-- SCRIPTS ON PAGE EVENT -->
+<script type="text/javascript">
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+	
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 * 
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 * 
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){ 
+	 *  loadScript(".../plugin.js", run_after_loaded);	
+	 * }
+	 * 
+	 * OR
+	 * 
+	 * loadScript(".../plugin.js", run_after_loaded);
+	 */
+
+	// PAGE RELATED SCRIPTS
+	
+	// pagefunction
+	
+	var pagefunction = function() {
+		
+	};
+	
+	// end pagefunction
+	
+	// run pagefunction on load
+	pagefunction();
+
+</script>

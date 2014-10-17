@@ -1,0 +1,356 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-pencil-square-o fa-fw "></i> 
+				Paciente
+			<span>> 
+				Busqueda de Paciente
+			</span>
+		</h1>
+	</div>	
+</div>
+<section id="widget-grid" class="">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">				
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Listas de Pacientes</h2>
+				</header>
+				<div>
+					<div class="jarviswidget-editbox">
+					</div>
+					<div class="widget-body no-padding">
+						<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+							<thead>			                
+								<tr>
+									<th data-hide="phone">ID</th>
+									<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombres</th><th>Apellidos</th>
+									<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Telefono</th>
+									<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Direccion</th>
+									<th data-hide="phone,tablet"> DNI</th>
+									<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Nacimiento</th>
+								</tr>
+							</thead>
+							<tbody id = "Tematico">											
+							</tbody>
+						</table>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+		</article>
+	</div>
+
+	<div class="row">
+
+		<!-- NEW COL START -->
+		<article class="col-sm-12 col-md-12 col-lg-6">
+			<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false">
+				
+				<header>
+					<span class="widget-icon"> <i class="fa fa-eye-slash"></i> </span>
+					<h2>Elija Tipo de Busqueda</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<div class="widget-body">
+
+						<form class="form-horizontal">
+							
+							<fieldset>								
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="select-1">Seleccione </label>
+									<div class="col-md-10">
+										<select class="form-control" id="cb">
+											<option value="0">DNI</option>
+											<option value="1">Nombres</option>
+											<option value="2">Apellidos</option>
+										</select> 
+									</div>
+								</div>
+								<div class="well">		
+								<div class="input-group">
+									<input class="form-control" type="text" placeholder="Search..." id="texto">
+										<div class="input-group-btn">
+											<button class="btn btn-default btn-primary" type="button" id="buscar">
+											<i class="fa fa-search"></i> Buscar
+											</button>
+										</div>
+								</div>
+								</div>
+								
+							</fieldset>
+						</form>
+
+					</div>
+				</div>				
+			</div>
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Registro de Paciente Nuevo </h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+
+						<form action="#" class="smart-form">
+							<header>
+								Registro de Paciente Nuevo
+							</header>
+
+							<fieldset>
+								
+								<section>
+									<label class="label">Nombres:</label>
+									<label class="input">
+										<input type="text" class="input-sm">
+									</label>
+								</section>
+
+								<section>
+									<label class="label">Apellidos:</label>
+									<label class="input">
+										<input type="text" class="input-sm">
+									</label>
+								</section>
+								<section>
+									<label class="label">Seleccione Sexo</label>
+									<label class="select">
+										<select class="input-sm">
+											<option value="0">Femenino</option>
+											<option value="1">Masculino</option>
+										</select> <i></i> </label>
+								</section>
+								<section>
+									<label class="label">DNI</label>
+									<label class="input">
+										<input type="text" class="input-xs">
+									</label>
+								</section>
+								<section>
+									<label class="label">Telefono</label>
+									<label class="input">
+										<input type="text" class="input-xs">
+									</label>
+								</section>
+								<section>
+									<label class="label">Direccion</label>
+									<label class="input">
+										<input type="text" class="input-xs">
+									</label>
+								</section>
+								<section>
+									<label class="label">Fecha de Nacimiento</label>
+									<label class="input">
+										<input type="text" class="input-xs">
+									</label>
+								</section>
+								<section>
+									<label class="label">Observaciones</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+									<div class="note">
+										<strong>Note:</strong> expands on focus.
+									</div>
+								</section>								
+							</fieldset>						
+						
+
+							<fieldset>
+								
+								<section>
+									<label class="label">Inline radios</label>
+									<div class="inline-group">
+										<label class="toggle">
+											<input type="checkbox" name="checkbox-toggle" checked="checked">
+											<i data-swchon-text="ON" data-swchoff-text="OFF"></i>DNI</label>
+										
+									</div>
+								</section>
+							</fieldset>													
+							<footer>
+								<button type="submit" class="btn btn-primary">
+									Guardar
+								</button>
+								<button type="button" class="btn btn-default" onclick="window.history.back();">
+									Regresar
+								</button>
+							</footer>
+						</form>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+		</article>
+		<!-- END COL -->
+		
+	</div>
+
+
+</section>
+
+
+<script >
+	$("#buscar").on("click", metodo)
+	function metodo()
+	{
+		var opcion=$(texto).val()
+		var seleccion = $(cb).val()
+		alert(seleccion)
+		
+		$.ajax({ 
+			data: {'texto': opcion, 'seleccion': seleccion},
+			url: '/buscar-ajax/',
+			type: 'get',
+
+			success: function(data)
+			{
+				$("#Tematico tr").remove();
+				for (var i=0; i<data.length; i++)
+				{									
+					var tr = '<tr>';
+					var td1 = '<td><a href="javascript:void(0);">' + data[i].pk + "</a></td>";
+               var td2 = '<td>' + data[i].fields.pac_nombre +'</td>';
+               var td3 = '<td>' + data[i].fields.pac_apellido + '</td>';
+               var td4 = '<td>' + data[i].fields.pac_telefono + '</td>';
+               var td5 = '<td>' + data[i].fields.pac_direccion + '</td>';
+               var td6 = '<td>' + data[i].fields.pac_dni +'</td>';
+               var td7 = '<td>' + data[i].fields.pac_fecnac + '</td></tr>';
+               $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 + td7);					
+					//alert("dddd");
+				}
+
+			}
+		});
+	}
+
+</script>
+<script type="text/javascript">
+
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+	
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 * 
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 * 
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){ 
+	 *  loadScript(".../plugin.js", run_after_loaded);	
+	 * }
+	 * 
+	 * OR
+	 * 
+	 * loadScript(".../plugin.js", run_after_loaded);
+	 */
+
+	// PAGE RELATED SCRIPTS
+
+	// pagefunction
+	
+	var pagefunction = function() {
+		
+		// class switcher for radio and checkbox
+		$('input[name="demo-switcher-1"]').change( function() {
+		  //alert($(this).val())
+		  $this = $(this);
+		  
+		  myNewClass = $this.attr('id');
+		  
+		  $('.demo-switcher-1 input[type="checkbox"]').removeClass();
+		  $('.demo-switcher-1 input[type="checkbox"]').addClass("checkbox "+ myNewClass);
+		  
+		  $('.demo-switcher-1 input[type="radio"]').removeClass();
+		  $('.demo-switcher-1 input[type="radio"]').addClass("radiobox "+ myNewClass);
+		  
+		});
+		
+	};
+	
+	// end pagefunction
+	
+	// run pagefunction on load
+	
+	pagefunction();
+	
+</script>

@@ -12,8 +12,9 @@ DJANGO_APPS = (
     )
 
 THIRD_PARTY_APPS= ( 
-    'south',
+    #'south',
     'django_extensions',
+    'social.apps.django_app.default',
     )
 
 LOCAL_APPS = (
@@ -21,7 +22,7 @@ LOCAL_APPS = (
     'apps.logistica',
     'apps.rr_hh',
     'apps.plantillas',
-    'apps.solicitudes',
+    'apps.solicitudes',    
     #'apps',
     )
 
@@ -51,3 +52,5 @@ USE_L10N = True
 USE_TZ = True
 
 TEMPLATE_DIRS=[BASE_DIR.child('templates')]
+
+AUTH_PROFILE_MODULE = 'rr_hh.Empleado'

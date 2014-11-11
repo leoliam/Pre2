@@ -1178,7 +1178,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		});
 	
 		 //Maxlength
-		loadScript("js/plugin/maxlength/bootstrap-maxlength.min.html", runMaxLength);
+		loadScript("js/plugin/maxlength/bootstrap-maxlength.min.js", runMaxLength);
 	
 		function runMaxLength() {
 		    $('input[maxlength]').maxlength({
@@ -1235,7 +1235,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 	
 		 //Load time picker script
 	
-		loadScript("js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.html", runTimePicker);
+		loadScript("js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js", runTimePicker);
 	
 		function runTimePicker() {
 		    $('#timepicker').timepicker();
@@ -1247,7 +1247,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		
 		// load clockpicker script
 		
-		loadScript("js/plugin/clockpicker/clockpicker.min.html", runClockPicker);
+		loadScript("js/plugin/clockpicker/clockpicker.min.js", runClockPicker);
 	
 		function runClockPicker(){
 			$('#clockpicker').clockpicker({
@@ -1260,7 +1260,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		 * JS SLIDER
 		 */
 	
-		loadScript("js/plugin/noUiSlider/jquery.nouislider.min.html", noUiSlider);
+		loadScript("js/plugin/noUiSlider/jquery.nouislider.min.js", noUiSlider);
 	
 		function noUiSlider() {
 	
@@ -1302,7 +1302,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		/*
 		 * ION SLIDER
 		 */
-		loadScript("js/plugin/ion-slider/ion.rangeSlider.min.html", ion_slider);
+		loadScript("js/plugin/ion-slider/ion.rangeSlider.min.js", ion_slider);
 	
 		function ion_slider() {
 	
@@ -1361,7 +1361,7 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		/*
 		 * COLOR PICKER
 		 */
-		loadScript("js/plugin/colorpicker/bootstrap-colorpicker.min.html", initializeColorpicker);
+		loadScript("js/plugin/colorpicker/bootstrap-colorpicker.min.js", initializeColorpicker);
 	
 		function initializeColorpicker() {
 	
@@ -1378,13 +1378,13 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		 * TAGS
 		 */
 	
-		loadScript("js/plugin/bootstrap-tags/bootstrap-tagsinput.min.html");
+		loadScript("js/plugin/bootstrap-tags/bootstrap-tagsinput.min.js");
 	
 	
 		/*
 		 * KNOB
 		 */
-		loadScript("js/plugin/knob/jquery.knob.min.html", startKnob);
+		loadScript("js/plugin/knob/jquery.knob.min.js", startKnob);
 	
 		function startKnob() {
 	
@@ -1406,22 +1406,22 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 		 * X-Ediable
 		 */
 	
-		loadScript("js/plugin/x-editable/moment.min.html", loadMockJax);
+		loadScript("js/plugin/x-editable/moment.min.js", loadMockJax);
 	
 		function loadMockJax() {
-		    loadScript("js/plugin/x-editable/jquery.mockjax.min.html", loadXeditable);
+		    loadScript("js/plugin/x-editable/jquery.mockjax.min.js", loadXeditable);
 		}
 	
 		function loadXeditable() {
-		    loadScript("js/plugin/x-editable/x-editable.min.html", loadTypeHead);
+		    loadScript("js/plugin/x-editable/x-editable.min.js", loadTypeHead);
 		}
 	
 		function loadTypeHead() {
-		    loadScript("js/plugin/typeahead/typeahead.min.html", loadTypeaheadjs);
+		    loadScript("js/plugin/typeahead/typeahead.min.js", loadTypeaheadjs);
 		}
 	
 		function loadTypeaheadjs() {
-		    loadScript("js/plugin/typeahead/typeaheadjs.min.html", runXEditDemo);
+		    loadScript("js/plugin/typeahead/typeaheadjs.min.js", runXEditDemo);
 		}
 	
 		function runXEditDemo() {
@@ -1583,9 +1583,9 @@ data-slider-tooltip = "show"       <span class="text-muted"> // show or hide</sp
 	
 		    $('#inline').on('change', function (e) {
 		        if ($(this).prop('checked')) {
-		            window.location.href = 'plugins4a97.html?mode=inline#ajax/plugins.html';
+		            window.location.href = '?mode=inline#ajax/plugins.html';
 		        } else {
-		            window.location.href = 'pluginsd41d.html?#ajax/plugins.html';
+		            window.location.href = '?#ajax/plugins.html';
 		        }
 		    });
 	

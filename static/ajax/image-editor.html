@@ -124,7 +124,7 @@ the <section></section> and you can use wells or panels instead
 						
 								</style>
 								
-								<img src="img/superbox/superbox-full-7.html" id="target-5" alt="[Jcrop Example]" class="pull-left" />
+								<img src="img/superbox/superbox-full-7.jpg" id="target-5" alt="[Jcrop Example]" class="pull-left" />
 		
 								<div class="pull-left padding-gutter padding-top-0 padding-bottom-0">
 									
@@ -164,28 +164,28 @@ the <section></section> and you can use wells or panels instead
 											Option Toggles
 										</legend>
 										<div class="optlist offset">
-											<label class="margin-top-0">
+											<label class="checkbox  margin-top-0">
 											  <input type="checkbox" class="checkbox style-0" id="ar_lock">
 											  <span>Aspect ratio</span>
 											</label>
 											
-											<label class="">
+											<label class="checkbox">
 											  <input type="checkbox" class="checkbox style-0" id="size_lock">
 											  <span>minSize/maxSize setting</span>
 											</label>
 										</div>
 										<div class="optlist">
-											<label class="margin-top-0">
+											<label class="checkbox  margin-top-0">
 											  <input type="checkbox" class="checkbox style-0" id="can_click">
 											  <span>Allow new selections</span>
 											</label>
 											
-											<label class="">
+											<label class="checkbox">
 											  <input type="checkbox" class="checkbox style-0" id="can_move">
 											  <span>Selection can be moved</span>
 											</label>
 											
-											<label class="">
+											<label class="checkbox">
 											  <input type="checkbox" class="checkbox style-0" id="can_size">
 											  <span>Resizable selection</span>
 											</label>
@@ -227,7 +227,7 @@ the <section></section> and you can use wells or panels instead
 									the cropping behavior.
 								</div>
 
-								<img src="img/superbox/superbox-full-11.html" id="target" alt="[Jcrop Example]" />
+								<img src="img/superbox/superbox-full-11.jpg" id="target" alt="[Jcrop Example]" />
 
 							</div>
 							<!-- end s1 tab pane -->
@@ -245,7 +245,7 @@ the <section></section> and you can use wells or panels instead
 								</div>
 
 								<!-- This is the image we're attaching Jcrop to -->
-								<img src="img/superbox/superbox-full-10.html" id="target-2" alt="[Jcrop Example]" />
+								<img src="img/superbox/superbox-full-10.jpg" id="target-2" alt="[Jcrop Example]" />
 
 								<!-- This is the form that our event handler fills -->
 								<form id="coords"
@@ -319,11 +319,11 @@ the <section></section> and you can use wells or panels instead
 									view in the preview pane.
 								</div>
 
-								<img src="img/superbox/superbox-full-9.html" id="target-3" alt="[Jcrop Example]" />
+								<img src="img/superbox/superbox-full-9.jpg" id="target-3" alt="[Jcrop Example]" />
 
 								<div id="preview-pane">
 									<div class="preview-container">
-										<img src="img/superbox/superbox-full-9.html" class="jcrop-preview" id="target-3" alt="Preview" />
+										<img src="img/superbox/superbox-full-9.jpg" class="jcrop-preview" id="target-3" alt="Preview" />
 									</div>
 								</div>
 
@@ -347,7 +347,7 @@ the <section></section> and you can use wells or panels instead
 
 									<div class="col-sm-12 col-md-12 col-lg-12">
 
-										<img src="img/superbox/superbox-full-7.html" id="target-4" alt="Jcrop Image" class="pull-left" />
+										<img src="img/superbox/superbox-full-7.jpg" id="target-4" alt="Jcrop Image" class="pull-left" />
 
 			
 										<div id="interface" class="pull-left padding-gutter padding-top-0 padding-bottom-0">
@@ -374,7 +374,7 @@ the <section></section> and you can use wells or panels instead
 
 								<h4 class="margin-bottom-10">Styling Example — style Jcrop dynamically with CSS</h4>
 
-								<img src="img/superbox/superbox-full-16.html" id="target-6" alt="[Jcrop Example]" />
+								<img src="img/superbox/superbox-full-16.jpg" id="target-6" alt="[Jcrop Example]" />
 		
 								<div class="pull-left pull-left padding-gutter padding-top-0 padding-bottom-0">
 									<fieldset>
@@ -582,7 +582,7 @@ the <section></section> and you can use wells or panels instead
 			$('#img1').click(function(e) {
 				$(this).addClass('active').closest('.btn-group').find('button.active').not(this).removeClass('active');
 
-				jcrop_api.setImage('img/superbox/superbox-full-7.html');
+				jcrop_api.setImage('img/superbox/superbox-full-7.jpg');
 				jcrop_api.setOptions({
 					bgOpacity : .6
 				});
@@ -591,7 +591,7 @@ the <section></section> and you can use wells or panels instead
 			$('#img2').click(function(e) {
 				$(this).addClass('active').closest('.btn-group').find('button.active').not(this).removeClass('active');
 
-				jcrop_api.setImage('img/superbox/superbox-full-24.html');
+				jcrop_api.setImage('img/superbox/superbox-full-24.jpg');
 				jcrop_api.setOptions({
 					bgOpacity : .6
 				});
@@ -600,7 +600,7 @@ the <section></section> and you can use wells or panels instead
 			$('#img3').click(function(e) {
 				$(this).addClass('active').closest('.btn-group').find('button.active').not(this).removeClass('active');
 
-				jcrop_api.setImage('img/superbox/superbox-full-20.html', function() {
+				jcrop_api.setImage('img/superbox/superbox-full-20.jpg', function() {
 					this.setOptions({
 						bgOpacity : 1,
 						outerImage : 'img/superbox/superbox-full-20-bw.jpg'
@@ -944,8 +944,8 @@ the <section></section> and you can use wells or panels instead
 		
 	};
 
-	loadScript("js/plugin/jcrop/jquery.Jcrop.min.html", function() {
-		loadScript("js/plugin/jcrop/jquery.color.min.html", pagefunction);
+	loadScript("js/plugin/jcrop/jquery.Jcrop.min.js", function() {
+		loadScript("js/plugin/jcrop/jquery.color.min.js", pagefunction);
 	});
 
 </script>

@@ -10,5 +10,12 @@ urlpatterns = patterns('',
 	url(r'^modi-pass/$', 'apps.rr_hh.views.ModiPass' , name='modiPass'),
 	url(r'^home-carga/$', 'apps.rr_hh.views.HomeCarga' , name='Carga'),
 	url(r'^create-carga/$', 'apps.rr_hh.views.CreateCarga' , name='createCarga'),
-	url(r'^create-cargas/$', 'apps.rr_hh.views.CreateCargas' , name='createCargas'),
+	url(r'^buscar-carga/$', 'apps.rr_hh.views.BuscarCarga' , name='buscarCarga'),
+	url(r'^modi-carga/$', 'apps.rr_hh.views.ModiCarga' , name='modiCarga'),
+	url(r'^home-horario/$', 'apps.rr_hh.views.HomeHorario' , name='horario'),
+	url(r'^create-horario/$', 'apps.rr_hh.views.CreateHorario' , name='createHorario'),
+	url(r'^buscar-horario/$', 'apps.rr_hh.views.BuscarHorario' , name='buscarHorario'),
+	url(r'^home-gestionHorario/$', 'apps.rr_hh.views.GestionHorario' , name='GestionHorario'),
+
+
 )

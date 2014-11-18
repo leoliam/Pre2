@@ -34,14 +34,12 @@ class ServicioEmpleado(models.Model):
     empleado = models.ForeignKey(Empleado)
     estado = models.BooleanField(default=True)
     
-class Programacion(models.Model):
-    prog_id = models.AutoField(primary_key=True)
-    servi_id= models.ForeignKey(ServicioEmpleado)
-    hor_fecha = models.DateField()
+class Programacion(models.Model):    
+    serviempledo= models.ForeignKey(ServicioEmpleado)
+    turno = models.CharField(max_length=1, blank=True)    
     hor_ing = models.TimeField(blank=True, null=True)
-    hor_sal = models.TimeField(blank=True, null=True)
-    hor_anotacion = models.TextField(blank=True)
-    hor_turno = models.CharField(max_length=3)
+    hor_sal = models.TimeField(blank=True, null=True)    
+    hor_fecha = models.DateField()
     minutosdatencion = models.IntegerField()
 
     

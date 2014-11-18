@@ -8,11 +8,9 @@ from django.core import serializers
 from django.http import HttpResponse, Http404
 
 import json
-
-
 class PacienteBView(TemplateView):
 	template_name = 'logistica/pacienteB.html'
-
+	
 
 def BuscarArea(request):		
 	if request.is_ajax():			

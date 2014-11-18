@@ -3,15 +3,18 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Empleado,ServicioEmpleado
+from .models import Empleado,ServicioEmpleado,Programacion
 from apps.logistica.models import Cargo,Area,Servicio
-from .forms import UserForm,UserFormModi,UserFormPass,RegistrarCargaForm
+from .forms import UserForm,UserFormModi,UserFormPass,RegistrarCargaForm,RegistrarProgramacionForm
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.core import serializers
 from django.http import HttpResponse, Http404
+from datetime import datetime
+
 
 import json
+import datetime as dt
 
 def CreatePersonal(request):	
 	if request.method == 'POST':
@@ -163,36 +166,17 @@ def HomePass(req):
 	return render(req, 'rr_hh/pass.html', tmpl_vars)
 
 def CreateCarga(request):	
-	if request.method == 'POST':
-		form = RegistrarCargaForm(request.POST)	
-		print "Dddd"	
-		response_data = {} 		
-		if form.is_valid() :						
-			#ServicioEmpleado= form.save()
-			#serviemp=ServicioEmpleado()	
-			#empleado.emp_nom = form.cleaned_data.get('emp_nom')	
-			#empleado.emp_ape = form.cleaned_data.get('emp_ape')
-			#empleado.emp_fecnac = form.cleaned_data.get('emp_fecnac')
-			#empleado.emp_direccion = form.cleaned_data.get('emp_direccion')
-			#empleado.emp_sexo = form.cleaned_data.get('emp_sexo')
-			#empleado.DNI = form.cleaned_data.get('DNI')
-			#empleado.email= form.cleaned_data.get('email')
-			#empleado.emp_tel = form.cleaned_data.get('emp_tel')
-			#empleado.emp_fecing = form.cleaned_data.get('emp_fecing')	
-			#empleado.cargo = form.cleaned_data.get('cargo')		
-			#empleado.user= user					
-			#empleado.save()			
-			response_data['result'] = "El nuevo Personal fue Registrado con Exito"
-			#response_data['postpk'] = paciente.pk	        print "XXSS"
-			#paciente.pac_fecnac = form.cleaned_data.get('DNI')	        
-			return HttpResponse(json.dumps(response_data),content_type="application/json")
-		else:
-			response_data['errorsEmp'] = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])						     
-			return HttpResponse(json.dumps(response_data),content_type="application/json")
-	else:
-		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")	
-
-
+	if request.is_ajax():			
+		codigo= request.GET['id']
+		response_data = {} 	
+		for x in request.GET.getlist('servicio[]'):
+			serviemp=ServicioEmpleado(empleado_id=codigo, servicio_id=x)
+			serviemp.save()			
+		response_data['result'] = "El Carga de Servicios fue Almacenada con Exito"
+		return HttpResponse(json.dumps(response_data),content_type="application/json")
+	else :
+		print "mal"
+		raise Http404
 
 def HomeCarga(req):
 	
@@ -203,16 +187,125 @@ def HomeCarga(req):
 	return render(req, 'rr_hh/Carga.html', tmpl_vars)
 
 
-def CreateCargas(request):		
+def BuscarCarga(request):		
 	if request.is_ajax():			
-		codigo= request.GET['id']
-		print "---"
-		empleado = Empleado.objects.filter(id=codigo)
-		#empleado= empleado.filter(emp_ape__icontains=texto)
-		data = serializers.serialize('json',empleado,
-		fields={'emp_nom','emp_ape','emp_direccion','DNI','emp_tel'})
-		return HttpResponse(data, content_type='application/json')
+		texto= request.GET['texto']
+		if request.GET['seleccion']=='1':
+			consulta = ServicioEmpleado.objects.filter(empleado=texto)
+			lista=[]
+			for carga in consulta:
+				print carga.servicio.id
+				d={'pk':carga.id,'servicio': carga.servicio.servi_nom,'estado':carga.estado,'servi_id':carga.servicio.id}
+
+				lista.append(d)
+				
+			return HttpResponse(json.dumps(lista), content_type='application/json')	
+		elif request.GET['seleccion']=='2':
+			consulta = ServicioEmpleado.objects.filter(empleado=texto)
+			consulta = consulta.filter(estado=True)
+			lista=[]
+			for carga in consulta:
+				d={'pk':carga.id,'servicio': carga.servicio.servi_nom,'estado':carga.estado,'servi_id':carga.servicio.id}
+				lista.append(d)
+				
+			return HttpResponse(json.dumps(lista), content_type='application/json')	
 	else :
 		print "mal"
 		raise Http404
-# Create your views here.
+
+def ModiCarga(request):	
+	if request.is_ajax():
+		response_data = {} 
+		serviemp = ServicioEmpleado.objects.get(id=request.GET['id'])
+		if request.GET['estado']=='true':
+			serviemp.estado=True
+			response_data['result'] = "El servicio quedo habilitado para el especialista selecionado"
+		else:
+			serviemp.estado=False
+			response_data['result'] = "El servicio quedo inhabilitado para el especialista selecionado"
+		serviemp.save()			
+		return HttpResponse(json.dumps(response_data),content_type="application/json")
+	else:
+		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
+
+
+def HomeHorario(req):
+	tmpl_vars = {		
+		'form': RegistrarProgramacionForm()
+	}	
+	return render(req, 'rr_hh/programacion.html', tmpl_vars)
+
+
+def CreateHorario(request):	
+	if request.method == 'POST':
+		form = RegistrarProgramacionForm(request.POST)		
+		response_data = {} 
+		if form.is_valid() :	
+			if form.cleaned_data.get('hor_sal')<form.cleaned_data.get('hor_ing'):
+				response_data['errorsHor'] = {'hor_sal':"La hora de salida debe ser mayor a la hora de ingreso"}
+			else:
+				d= form.cleaned_data.get('hor_fecha')
+				delta = dt.timedelta(days=1)			
+				h= form.cleaned_data.get('hor_sal').hour - form.cleaned_data.get('hor_ing').hour
+				if form.cleaned_data.get('hor_ing').minute > form.cleaned_data.get('hor_sal').minute:
+					m= (form.cleaned_data.get('hor_sal').minute+60)-form.cleaned_data.get('hor_ing').minute
+					m= m+((h-1)*60)
+				else:
+					m= form.cleaned_data.get('hor_sal').minute-form.cleaned_data.get('hor_ing').minute
+					m= m+(h*60)
+				if form.cleaned_data.get('fec_fin'):
+					while d<=form.cleaned_data.get('fec_fin'):
+						for x in form.cleaned_data.get('serviempledos'):
+							programacion= Programacion(serviempledo_id=x.id)
+							programacion.turno= form.cleaned_data.get('turno')
+							programacion.hor_fecha= d
+							programacion.hor_ing= form.cleaned_data.get('hor_ing')
+							programacion.hor_sal= form.cleaned_data.get('hor_sal')
+							programacion.minutosdatencion= m
+							programacion.save()	
+						d += delta
+				else:
+					for x in form.cleaned_data.get('serviempledos'):
+						programacion= Programacion(serviempledo_id=x.id)
+						programacion.turno= form.cleaned_data.get('turno')
+						programacion.hor_fecha= form.cleaned_data.get('hor_fecha')
+						programacion.hor_ing= form.cleaned_data.get('hor_ing')
+						programacion.hor_sal= form.cleaned_data.get('hor_sal')
+						programacion.minutosdatencion= m
+						programacion.save()
+				response_data['result'] = "El nuevo Horario fue Registrado con Exito"	
+								
+			
+			#response_data['postpk'] = paciente.pk	        print "XXSS"
+			#paciente.pac_fecnac = form.cleaned_data.get('DNI')	        
+			return HttpResponse(json.dumps(response_data),content_type="application/json")
+		else:
+			response_data['errorsHor'] = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])						     
+			return HttpResponse(json.dumps(response_data),content_type="application/json")
+	else:
+		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")	
+
+
+def GestionHorario(req):		
+	return render(req, 'rr_hh/GestionProgramacion.html')
+
+
+def BuscarHorario(request):		
+	if request.is_ajax():			
+		texto= request.GET['texto']
+		if request.GET['seleccion']=='1':
+			consulta = Programacion.objects.filter(serviempledo__empleado_id=texto)
+			data = serializers.serialize('json',consulta)
+			return HttpResponse(data, content_type='application/json')
+		elif request.GET['seleccion']=='2':
+			consulta = ServicioEmpleado.objects.filter(empleado=texto)
+			consulta = consulta.filter(estado=True)
+			lista=[]
+			for carga in consulta:
+				d={'pk':carga.id,'servicio': carga.servicio.servi_nom,'estado':carga.estado,'servi_id':carga.servicio.id}
+				lista.append(d)
+				
+			return HttpResponse(json.dumps(lista), content_type='application/json')	
+	else :
+		print "mal"
+		raise Http404

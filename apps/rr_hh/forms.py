@@ -1,6 +1,8 @@
+#! /usr/bin/python
+# -*- coding: UTF-8 -*-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Empleado,ServicioEmpleado
+from .models import Empleado,ServicioEmpleado,Programacion
 from django.contrib.auth.models import User
 from django.forms import ModelMultipleChoiceField
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -90,14 +92,35 @@ class UserFormPass(forms.ModelForm):
 class RegistrarCargaForm(forms.ModelForm):
 	id = forms.IntegerField(widget = forms.HiddenInput(
 		attrs={ 'id': 'codigo'}))
-	#empleado=	
-	servi=ModelMultipleChoiceField(queryset=Servicio.objects.all(), required=False,
+	empleado=forms.IntegerField(widget = forms.HiddenInput(
+		attrs={ 'id': 'codigoemp'}))
+	servicio=ModelMultipleChoiceField(queryset=Servicio.objects.all(), required=False,
 		widget=forms.SelectMultiple(attrs={'class' : 'form-control custom-scroll' ,'id': 'multiselect1'}))
-	servicio=forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'class' : 'form-control custom-scroll' ,'id': 'multiselect2'}))
+	servi=forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'class' : 'form-control custom-scroll' ,'id': 'multiselect2'}))
 
 	class Meta: 
 		model = ServicioEmpleado
 
+
+class RegistrarProgramacionForm(forms.ModelForm):
+	id = forms.IntegerField(required=False,widget = forms.HiddenInput(
+		attrs={ 'id': 'codigo'}))	
+	serviempledos =forms.ModelMultipleChoiceField(queryset=ServicioEmpleado.objects.all(),widget=forms.SelectMultiple(
+		attrs={'class' : 'select2' ,'id': 'multiselect1','multiple style':'width:100%'}))	
+	turno = forms.ChoiceField(required=False, choices=(('M', 'Turno Mañana'),('T', 'Turno Tarde')),
+		widget= forms.Select(attrs={'class' : 'select2' ,'id': 'turno','style':'width:100%'}))
+	hor_ing= forms.TimeField(input_formats=['%H:%M','%I:%M %p'],widget=forms.TimeInput(format=["%H:%M","%I:%M %p"],
+		attrs={'class' : 'form-control','type':'text' ,'id': 'timepicker','placeholder': 'Seleccione una Hora de Ingreso'}))
+	hor_sal= forms.TimeField(input_formats=['%H:%M','%I:%M %p'],widget=forms.TimeInput(format=["%H:%M","%I:%M %p"],
+		attrs={'class' : 'form-control','type':'text' ,'id': 'timepicker2','placeholder': 'Seleccione una Hora de Salida'}))
+	
+	hor_fecha= forms.DateField(widget=forms.DateInput( 
+		attrs={ 'id': 'to','type': 'text','placeholder': 'Desde','class':"form-control"}))
+	fec_fin= forms.DateField(required=False,widget=forms.DateInput( 
+		attrs={ 'id': 'from','type': 'text','placeholder': 'Hasta','class':"form-control"}))
+	class Meta:
+		model = Programacion
+		exclude = ['minutosdatencion','serviempledo']
 
 
 

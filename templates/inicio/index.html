@@ -97,6 +97,7 @@
 		* 'fixed-footer'      - Fixes footer
 		* 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
 	-->
+	{% if user.is_authenticated %}
 	<body class="">
 
 		<!-- #HEADER -->
@@ -219,7 +220,7 @@
 
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="login.html" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+					<span> <a href="/cerrar/" title="Sign Out" data-action="userLogout" data-logout-msg="Esta seguro que desea cerrar Sesión"><i class="fa fa-sign-out"></i></a> </span>
 				</div>
 				<!-- end logout button -->
 
@@ -263,7 +264,7 @@
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="{% static "img/avatars/logo.png" %}" alt="me" class="online" /> 
 						<span>
-							Wilmer Cotrina
+							{{user.username}}
 						</span>
 						<i class="fa fa-angle-down"></i>
 					</a> 					
@@ -318,8 +319,11 @@
 								<a href="{% url 'Carga' %}">Asignacion de Carga</a>
 							</li>
 							<li>
-								<a href="{% url 'Modelo' %}">Tarea</a>
-							</li>							
+								<a href="{% url 'horario' %}">Creacion de Horarios</a>
+							</li>
+							<li>
+								<a href="{% url 'GestionHorario' %}">Gestion de Horarios</a>
+							</li>						
 						</ul>
 					</li>
 					<li>
@@ -759,7 +763,9 @@
 		</script>
 
 	</body>
-
+{% else %}
+Usted no tiene Permisos para Ingresar A esta Pagina
+{% endif %}  
 
 <!-- Mirrored from 192.241.236.31/themes/preview/smartadmin/1.4.1/ajaxversion/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Sep 2014 18:14:58 GMT -->
 </html>

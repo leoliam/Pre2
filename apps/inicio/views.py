@@ -16,7 +16,7 @@ def IndexView(req):
 def cargar_servicio(request):
 	consulta = Servicio.objects.select_related().filter(area__area_nom__icontains='Analisis')
 	consulta2 = Servicio.objects.select_related().filter(area__area_nom__icontains='Ecografias')
-	consulta3 = Servicio.objects.select_related().filter(area__area_nom__icontains='Consulta')
+	consulta3 = Servicio.objects.select_related().filter(area__area_nom__icontains='Consultas')
 	consulta6 = Promocion.objects.filter(fecha_registro__month=datetime.now().month)
 	return render(request, 'inicio/principal.html',{'consulta':consulta, 'consulta2':consulta2,'consulta3':consulta3,'consulta6':consulta6})
 		

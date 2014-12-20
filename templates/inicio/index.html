@@ -249,7 +249,7 @@
 
 				<ul>
 				<li class="">
-						<a href="{% url 'PlantillaConsulta' %}"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Bienvenido</span></a>
+						<a href="{% url 'Bienvenido' %}"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Bienvenido</span></a>
 					</li>
 				{% csrf_token %}
 				{% for i in consulta %}
@@ -344,8 +344,25 @@
 					
 
 					{% elif i.cargo.cargo_nom == "Asistente"%}
-						<li class="">
-						<a href="{% url 'solicitud' %}"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Solicitudes</span></a>
+						<li>
+
+						<a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Solicitudes</span></a>
+						<ul>
+							<li>
+								<a href="{% url 'solicitud' %}">Creacion de Citas Medicas</a>
+							</li>
+												
+							<li>
+								<a href="{% url 'gestionSolicitud' %}">Administracion de Citas Medicas</a>
+							</li>
+							<li>
+								<a href="{% url 'home' %}">Administracion de Pacientes</a>
+							</li>
+							<li>
+								<a href="{% url 'ReporteSolicitud' %}">Reporte Solicitud</a>
+							</li>														
+						</ul>
+							
 					</li>
 
 					{% endif %}

@@ -1,0 +1,246 @@
+<!-- Bread crumb is created dynamically -->
+<!-- row -->
+<div class="row">
+
+	<!-- col -->
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><i class="fa-fw fa fa-file-o"></i> Home<span>>
+			Bienvenida </span></h1>
+	</div>
+	<!-- end col -->
+
+	<!-- right side of the page with the sparkline graphs -->
+	<!-- col -->
+	
+	<!-- end col -->
+
+</div>
+<!-- end row -->
+
+<!-- row -->
+
+<div class="row">
+
+	<div class="col-sm-12">
+
+
+			<div class="well well-sm">
+
+				<div class="row">
+
+					<div class="col-sm-12 col-md-12 col-lg-6">
+						<div class="well well-light well-sm no-margin no-padding">
+
+							<div class="row">
+
+								<div class="col-sm-12">
+									<div id="myCarousel" class="carousel fade profile-carousel">
+										
+										
+									</div>
+								</div>
+
+								<div class="col-sm-12">
+
+									<div class="row">
+
+										<div class="col-sm-3 profile-pic">
+											
+										</div>
+										<div class="col-sm-6">
+											<h1>Bienvenido <span class="semi-bold"> {{user.username}}</span>
+											<br>
+											<small> Progreso Admin</small></h1>
+
+											<ul class="list-unstyled">
+												<li>
+													<p class="text-muted">
+														<i class="fa fa-phone"></i>&nbsp;&nbsp;(<span class="txt-color-darken">01</span>) <span class="txt-color-darken">235</span> - <span class="txt-color-darken">2565</span>
+													</p>
+												</li>
+												<li>
+													<p class="text-muted">
+														<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:simmons@smartadmin">CProgreso@smartadmin.com</a>
+													</p>
+												</li>
+												<li>
+													<p class="text-muted">
+														<i class="fa fa-skype"></i>&nbsp;&nbsp;<span class="txt-color-darken">CProgreso</span>
+													</p>
+												</li>
+												<li>
+													
+												</li>
+											</ul>
+											<br>
+											<p class="font-md">
+												<i>Una Pequeña Intro.</i>
+											</p>
+											<p>
+
+												Esta aplicacion Busca Facilitar tus actividades cotidianas, puedes acceder desde cualquier dispositivo movil o de escritorio, si tienes sugerencia sobre alguna tarea que deseas deseas optimizar, comuniquese con el administras para mas detalle
+
+											</p>
+											<br>
+											<a href="javascript:void(0);" class="btn btn-default btn-xs"><i class="fa fa-envelope-o"></i> Send Message</a>
+											<br>
+											<br>
+
+										</div>
+										
+
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-sm-12">
+
+									<hr>
+
+									<div class="padding-10">
+
+										<ul class="nav nav-tabs tabs-pull-right">
+											
+											<li class="pull-left">
+												<span class="margin-top-10 display-inline"><i class="fa fa-rss text-success"></i> Activity</span>
+											</li>
+										</ul>
+
+										<div class="tab-content padding-top-10">
+											<div class="tab-pane fade in active" id="a1">
+
+												<div class="row">
+
+													
+
+												</div>
+
+											</div>
+											<div class="tab-pane fade" id="a2">
+
+												
+												<div class="text-center">
+													<ul class="pagination pagination-sm">
+														<li class="disabled">
+															<a href="javascript:void(0);">Prev</a>
+														</li>
+														<li class="active">
+															<a href="javascript:void(0);">1</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">2</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">3</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">...</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">99</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">Next</a>
+														</li>
+													</ul>
+												</div>
+
+											</div><!-- end tab -->
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+							<!-- end row -->
+
+						</div>
+
+					</div>
+					
+				</div>
+
+			</div>
+
+
+	</div>
+
+</div>
+
+<!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+	
+	/*
+	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
+	 * eg alert("my home function");
+	 * 
+	 * var pagefunction = function() {
+	 *   ...
+	 * }
+	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
+	 * 
+	 * TO LOAD A SCRIPT:
+	 * var pagefunction = function (){ 
+	 *  loadScript(".../plugin.js", run_after_loaded);	
+	 * }
+	 * 
+	 * OR
+	 * 
+	 * loadScript(".../plugin.js", run_after_loaded);
+	 */
+
+	// PAGE RELATED SCRIPTS
+
+	// pagefunction
+	
+	var pagefunction = function() {
+		
+	};
+	
+	// end pagefunction
+	
+	// run pagefunction on load
+
+	pagefunction();
+
+</script>

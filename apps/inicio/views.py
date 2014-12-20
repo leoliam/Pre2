@@ -19,5 +19,10 @@ def cargar_servicio(request):
 	consulta3 = Servicio.objects.select_related().filter(area__area_nom__icontains='Consultas')
 	consulta6 = Promocion.objects.filter(fecha_registro__month=datetime.now().month)
 	return render(request, 'inicio/principal.html',{'consulta':consulta, 'consulta2':consulta2,'consulta3':consulta3,'consulta6':consulta6})
+
+
+def Bienvenido(req):
+	consulta=Empleado.objects.filter(user__username=req.user)
+	return render(req, 'inicio/profile.html',{'consulta':consulta})
 		
 

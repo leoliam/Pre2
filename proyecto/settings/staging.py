@@ -7,12 +7,12 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consultorio',
-        'USER': 'root',
-        'PASSWORD': 'dynamo',
-        'HOST': 'localhost',
-        'POR': '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd7r2ke79ptpunf',
+        'USER': 'xeszfbazcfebck',
+        'PASSWORD': 'hkR9cnq-ySqPfncIHioqm5MW6E',
+        'HOST': 'ec2-54-163-250-41.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

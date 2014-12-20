@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block contenido %}
+<style type="text/css">
+	h1{color: #000000; text-align: center; text-decoration:underline;}
+	.cabe{font-weight: bold; background: #1E90FF; color: white;}
+</style>
+</div>
+<table border="0">
+<th width="70%"><img src='static/images/titulo4.jpg'/></br><strong style="font-style:italic; font-size:13px;">&nbsp;&nbsp; Jr. Progreso 331 - Barranca  Telefono: 2352565 Celular: 998170923</strong></th>
+<th width="30%"><img align="right" src='static/images/logo3.jpg'/></th>
+</table>
+<hr>
+<div>
+	<h1>INFORME DE RESULTADOS MEDICOS</h1>
+</div>
+<table border="0" style="padding: 8px 1px 1px 1px; background: #E6E6FA">
+<th width="10%" align="center" style="font-size:11px; font-family:Georgia;"><strong style="color: #000000;">PACIENTE:</strong></th>
+<th width="40%" align="left" style="font-size:11px; font-family:Georgia;"><strong style="color: #000000;">&nbsp;{{paciente.pac_nombre}}&nbsp;{{paciente.pac_apellido}}</strong></th>
+
+<th width="15%" align="center" style="font-size:11px; font-family:Georgia;"><strong style="color: #000000;">FECHA DE CITA:</strong> <strong style="color: #FF1493;"></th>
+<th width="35%" align="left" style="font-size:11px; font-family:Georgia;"><strong style="color: #000000;">&nbsp;{{programacion.hor_fecha}}</strong> <strong style="color: #FF1493;"></strong></th>
+</table>
+
+</br>
+<section>
+<div>
+<table id="tabla" border="0px" width="100%" align="center" height="10px" style="padding:3px" style="background: #eee;">
+{% for i in lista %}
+<tr>
+<td width="20%" align="left" style="font-size:14px; font-family:Georgia;"><strong style="color: #000000;">{{ i.item}}</strong></td>
+<td width="80%" align="left" style="font-size:14px; font-family:Georgia;"><strong style="color: #000000;"><i>&nbsp;{{ i.valor}}</i></strong></td>
+</tr>
+{% endfor %}
+
+				
+
+</table>
+</div>
+</section>
+{% endblock %}

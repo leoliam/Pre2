@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import datetime
+from apps.rr_hh.models import Programacion
+from apps.plantillas.models import Item
 
 
 class Paciente(models.Model):  
@@ -25,10 +28,23 @@ class Paciente(models.Model):
     	return self.pac_nombre
 
 class Solicitud(models.Model):
-    soli_id = models.AutoField(primary_key=True)
     paciente = models.ForeignKey(Paciente)
-    soli_anotacion = models.TextField(blank=True)
-    emp_id = models.IntegerField(blank=True, null=True)
-    fec_reg = models.DateField(blank=True, null=True)
-    soli_estado = models.IntegerField(blank=True, null=True)
+    usuario = models.CharField(max_length=50,blank=True, null=True)
+    fec_reg = models.DateField(default=datetime.now,auto_now_add=True)
+    soli_estado = models.BooleanField(default=True)
+    soli_abono = models.DecimalField(max_digits=8, decimal_places=2,validators = [MinValueValidator(0.0), MaxValueValidator(3500.0)])
+    soli_descuento = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True) 
 
+class DetalleSolicitud(models.Model):
+    solicitud = models.ForeignKey(Solicitud)
+    programacion = models.ForeignKey(Programacion)
+    NumCita=models.IntegerField()    
+    pedido_costo = models.DecimalField(max_digits=8, decimal_places=2,validators = [MinValueValidator(0.0), MaxValueValidator(3500.0)])
+    pedido_estado = models.BooleanField(default=False)       
+    triaje = models.BooleanField(default=False)
+
+class Resultado(models.Model):
+    detallesoli = models.ForeignKey(DetalleSolicitud)
+    item = models.ForeignKey(Item)
+    resul_valor1 = models.TextField()
+    

@@ -264,7 +264,7 @@
 										</button>
 										<button class="btn btn-primary" type="submit">
 											<i class="fa fa-save"></i>
-											Submit
+											Guardar
 										</button>
 									</div>
 								</div>
@@ -288,7 +288,11 @@
 
 
 <script type="text/javascript">
-$(document).off( "click", ".btn-xs" )
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")
+
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
 	 *
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
@@ -424,7 +428,15 @@ $('#checkout-form').on('submit', function(event){
 		            }            
 		            else
 		            {
+		            	if (json.error)
+			            {
+			            	alert(json.error);
+			            }
+			            else{
 		            	alert(json.result);
+
+		            	location.reload(); 
+		            	}
 		            	
 		            }           
 		        }
@@ -499,7 +511,7 @@ $.ajaxSetup({
                var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
                var td6 = '<td>' + data[i].fields.DNI +'</td>';
                
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Cargar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
                $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8);					
@@ -509,21 +521,14 @@ $.ajaxSetup({
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
-	function Cargar()
+	$(document).on("click",".bg-color-magenta",cargamodi);
+	function cargamodi()
 	{
-
-		var texto=$(this).attr('id')			
-		$.ajax({ 
-			data: {'texto': texto, 'seleccion': 6},
-			url: '/buscar-personal/',
-			type: 'get',
-			success: function(data)
-			{	$('#btncambios').removeClass('disabled')
-				$("#codigoemp").val(data.pk)		   	
-				$("#nombres").val(data.nombre+" "+data.apellido)
-			}
-		});		
+		var texto=$(this).attr('id')		
+		fila = $(this).closest('tr').index();
+		$("#codigoemp").val($(this).attr('id'))		   	
+		$("#nombres").val("  "+$('#Tematico tr:eq('+fila+') td:eq('+1+')').text()+" "+$('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+				
 		$.ajax({ 
 			data: {'texto': texto, 'seleccion': 2},
 				url: '/buscar-carga/',
@@ -539,16 +544,6 @@ $.ajaxSetup({
 				}
 			});
 
-		$.ajax({ 
-			data: {'texto': texto, 'seleccion': 1},
-				url: '/buscar-horario/',
-				type: 'get',
-				success: function(data)
-				{ 
-					alert("")
-				}
-			});
-		
 	}
 	
 	

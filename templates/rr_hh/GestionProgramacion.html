@@ -91,7 +91,7 @@
 								<div class="input-group">
 									<input class="form-control" type="text" placeholder="Search..." id="texto">
 										<div class="input-group-btn">
-											<button class="btn btn-default btn-primary" type="button" id="buscar">
+											<button class="btn btn-default btn-primary" type="button" id="busca">
 											<i class="fa fa-search"></i> Buscar
 											</button>
 										</div>
@@ -106,8 +106,7 @@
 			</div>	
 							
 
-		</article>	
-
+		</article>
 		<article class="col-sm-12 col-md-12 col-lg-6">
 			
 			
@@ -145,13 +144,13 @@
 					<div class="widget-body">
 
 						<form action="#" method="POST" id="checkout-form">
-						{% csrf_token %}
-						<label class="label"  >{{form.id}}</label>
+						<!-- <input type="hidden" id="id"  />-->
+						<label class="label"  ></label>
 							<fieldset>				
 								<div class="form-group">
 									<label class="col-md-2 control-label">Nombre</label>
 									<div class="col-md-10">
-										<input class="form-control"id="nombres" type="text">
+										<input class="form-control"id="nombres" type="text"readonly>
 									</div>
 								</div>
 								
@@ -166,24 +165,19 @@
 								<div class="form-group">
 								<label>Servicios Asignados</label>
 									
-									{{form.turno}}
-								</div>						
+									<select style="width:100%" class="select2" id="servicio">
+										
+									</select>
+								</div>	
+
+								<div class="input-group-btn">
+											<button class="btn btn-default btn-primary disabled" type="button" id="CarHor">
+											<i class="fa fa-search"></i> Cargar Horario
+											</button>
+										</div>					
 
 							</fieldset>							
 	
-							<div class="form-actions">
-								<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-default" type="submit">
-											Cancel
-										</button>
-										<button class="btn btn-primary" type="submit">
-											<i class="fa fa-save"></i>
-											Submit
-										</button>
-									</div>
-								</div>
-							</div>
 
 						</form>
 
@@ -261,6 +255,7 @@
 					</div>
 					<div id="calendar"></div>
 
+
 					<!-- end content -->
 				</div>
 
@@ -273,8 +268,68 @@
 
 </div>
 
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="titulo"class="modal-title"></h4>            
+                <input type="hidden" id="id"  />
+				<input type="hidden" id="serEmp"  />
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <form id="loginForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"> Hora de Ingreso:</label>
+
+                        <div class="col-sm-5">
+                            <input class="form-control"id="startTime" type="text">
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Hora de Salida</label> 
+                        <div class="col-sm-5">
+
+                            <input class="form-control"id="endTime" type="text">
+                        </div>
+                    </div>
+                    <input type="hidden" id="fecha"  />
+                    <div class="form-group">
+                        <div class="col-sm-5 col-sm-offset-3">
+                            <button type="button" id="modificar" class="btn btn-default">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script type="text/javascript">
-$(document).off( "click", ".btn-xs" )
+
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")	
+$("#modificar").on("click", metodo)
+	function metodo()
+	{				
+		$.ajax({ 
+			data: {'id': $("#id").val(), 'fecha': $("#fecha").val(),'ingreso': $("#startTime").val(), 'salida': $("#endTime").val(),'serviemp':$(serEmp).val()},
+			url: '/modi-horario/',
+			type: 'get',
+			success: function(data)
+			{				
+				alert(data.result)
+			}
+		});
+	}
 	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
 	 *
 	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
@@ -311,22 +366,32 @@ $(document).off( "click", ".btn-xs" )
 	
 	var pagefunction = function() {
 		
-		
-	$("#buscar").on("click", metodo)
+	$("#CarHor").on("click", horario)
+	function horario()
+	{
+		$(serEmp).val($('#servicio').val())
+		$.ajax({ 
+			data: {'servicio': $('#servicio').val(), 'seleccion': 1},
+				url: '/buscar-horario/',
+				type: 'get',
+				success: function(data)
+				{ 
+					$('#calendar').fullCalendar( 'removeEvents')
+					for (var i=0; i<data.length; i++)
+					{
+
+						calendar.fullCalendar('renderEvent',data[i],
+							true 
+						);
+					}
+					
+				}
+			});
+	}
+	$("#busca").on("click", metodo)
 	function metodo()
 	{
-		$('#calendar').fullCalendar( 'removeEvents'  )
-		$("#calendar").fullCalendar('renderEvent',
-          {
-              
-              
-              title: 'holla',
-	          start: new Date(y, m, 5),
-	          description: 'long description',
-	          className: ["event", "bg-color-greenLight"],
-	          icon: 'fa-check'
-          },
-          true);
+		$('#CarHor').addClass('disabled')
 		var seleccion = $(cb).val()
 		var opcion=$(texto).val()
 		$.ajax({ 
@@ -347,7 +412,7 @@ $(document).off( "click", ".btn-xs" )
                var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
                var td6 = '<td>' + data[i].fields.DNI +'</td>';
                
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Cargar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
                $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8);					
@@ -357,48 +422,61 @@ $(document).off( "click", ".btn-xs" )
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
+	$(document).on("click",".bg-color-magenta",Cargar);	
 	function Cargar()
 	{
-
-		var texto=$(this).attr('id')			
-		$.ajax({ 
-			data: {'texto': texto, 'seleccion': 6},
-			url: '/buscar-personal/',
-			type: 'get',
-			success: function(data)
-			{	$('#btncambios').removeClass('disabled')
-				$("#codigoemp").val(data.pk)		   	
-				$("#nombres").val(data.nombre+" "+data.apellido)
-			}
-		});		
+		var texto=$(this).attr('id')
+		fila = $(this).closest('tr').index();			
+			$('#CarHor').removeClass('disabled')
+			$("#id").val($(this).attr('id'))		   	
+			$("#nombres").val("  "+$('#Tematico tr:eq('+fila+') td:eq('+1+')').text()+" "+$('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+				
 		$.ajax({ 
 			data: {'texto': texto, 'seleccion': 2},
 				url: '/buscar-carga/',
 				type: 'get',
 				success: function(data)
 				{ 
-					$("#turno option").remove();
+					$("#servicio option").remove();
 					for (var i=0; i<data.length; i++)
 					{			
-										
-						$('#turno').append('<option value="'+data[i].pk+'">'+data[i].servicio+'</option>');
+						if(i==0)
+						{
+							$('#servicio').append('<option value="'+data[i].pk+'" >'+data[i].servicio+'</option>');
+						}
+						else
+						{
+							$('#servicio').append('<option value="'+data[i].pk+'">'+data[i].servicio+'</option>');
+						}
+						
 					}	
 				}
 			});
 
-		$.ajax({ 
-			data: {'texto': texto, 'seleccion': 1},
-				url: '/buscar-horario/',
-				type: 'get',
-				success: function(data)
-				{ 
-					alert("")
-				}
-			});
+		
 		
 	}
 	
+	function formatohora(date)
+	{
+
+	         hora=date.getHours()
+	         min=date.getMinutes()
+	         if (hora < 10){hora = "0" + hora;}
+	         if (min < 10){min = "0" + min;}
+	         tiempo= hora+":"+min
+		return tiempo
+	}
+	function formatofecha(date)
+	{
+		mes=date.getMonth()+1
+		dia=date.getDate()
+		if (mes < 10){mes = "0" + mes;}
+		if (dia < 10){dia = "0" + dia;}
+
+	         tiempo=  date.getFullYear()+ "-" +mes+ "-" + dia 
+		return tiempo
+	}
 	
 
 			
@@ -418,7 +496,7 @@ $(document).off( "click", ".btn-xs" )
 	    /* initialize the calendar
 		 -----------------------------------------------------------------*/
 	
-	    $('#calendar').fullCalendar({
+	    var calendar =$('#calendar').fullCalendar({
 	
 	        header: hdr,
 	        
@@ -426,7 +504,13 @@ $(document).off( "click", ".btn-xs" )
 	            prev: '<i class="fa fa-chevron-left"></i>',
 	            next: '<i class="fa fa-chevron-right"></i>'
 	        },
-	
+	        monthNames: ['Enero','Febrero','Marzo','Abril','Maiyo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	        monthNamesShort:
+            ['Ene.','Feb.','Mar','Abr.','May','Jun','Jul.','Ago','Sep.','Oct.','Nov.','Dic.'],
+            dayNames: ['Domingo','Lunes','Martes','Miercoles','Jeuves','Veiernes','Sabado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jeu', 'Vie', 'Sab'],
+			editable: true,
+	        droppable: true, 
 	        
 	
 	        select: function (start, end, allDay) {
@@ -442,25 +526,18 @@ $(document).off( "click", ".btn-xs" )
 	            }
 	            calendar.fullCalendar('unselect');
 	        },
+	      /*  eventClick: function(calEvent, jsEvent, view) {
+
+        alert('Event: ' + calEvent.title);
+        alert('dia: ' + calEvent.start);
+        alert('View: ' + view.name);
+
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+    },*/
 	
-	        events: [{
-	            title: 'All Day Event',
-	            start: new Date(y, m, 1),
-	            description: 'long description',
-	            className: ["event", "bg-color-greenLight"],
-	            icon: 'fa-check'
-	        },   {
-	            title: 'Lunch',
-	            start: new Date(y, m, d, 12, 0),
-	            end: new Date(y, m, d, 14, 0),
-	            allDay: false,
-	            className: ["event", "bg-color-darken"]
-	        }, {
-	            title: 'Smartadmin Open Day',
-	            start: new Date(y, m, 28),
-	            end: new Date(y, m, 29),
-	            className: ["event", "bg-color-darken"]
-	        }],
+	         timeFormat: 'H(:mm)',
 	
 	        eventRender: function (event, element, icon) {
 	            if (!event.description == "") {
@@ -471,6 +548,15 @@ $(document).off( "click", ".btn-xs" )
 	                element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon +
 	                    " '></i>");
 	            }
+	            element.click(function() {
+	            	f=formatofecha(event.start);
+	        $("#id").val(event.id);
+	        $("#fecha").val(f);
+            $("#startTime").val(formatohora(event.start));
+            $("#endTime").val(formatohora(event.end));
+            $("#titulo").html("Fecha Original "+f);
+            $('#loginModal').modal()
+        });
 	        },
 	
 	        windowResize: function (event, ui) {

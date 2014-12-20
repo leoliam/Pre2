@@ -288,60 +288,12 @@ $(document).off( "click", ".btn-xs" )
 	
 	var pagefunction = function() {
 
-		var $checkoutForm = $('#checkout-form').validate({
-		// Rules for form validation
-			rules : {
-				fname : {
-					required : true
-				},
-				lname : {
-					required : true
-				},
-				email : {
-					required : true,
-					email : true
-				},
-				phone : {
-					required : true
-				},				
-				code : {
-					required : true,
-					digits : true
-				},
-				address : {
-					required : true
-				}
-			},
-	
-			// Messages for form validation
-			messages : {
-				fname : {
-					required : 'Please Ingrese sus Nombres'
-				},
-				lname : {
-					required : 'Please Ingrese sus Apellidos'
-				},
-				email : {
-					required : 'Ingrese un Email',
-					email : 'Ingrese un Email Valido'
-				},
-				phone : {
-					required : 'Ingrese un Numero Telefonico'
-				},				
-				code : {
-					required : 'Ingrese un DNI',
-					digits : 'Solo Numeros Por Favor'
-				},
-				
-			},
-	
-			// Do not change code below
-			errorPlacement : function(error, element) {
-				error.insertAfter(element.parent());
-			}
-		});
-				
 		
+				
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")		
 var servi=[]
 $('#btn-add').on("click", add)
 function add()
@@ -456,7 +408,7 @@ $.ajaxSetup({
                var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
                var td6 = '<td>' + data[i].fields.DNI +'</td>';
                
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Cargar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
                $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8);					
@@ -466,20 +418,15 @@ $.ajaxSetup({
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
+	$(document).on("click",".bg-color-magenta",Cargar);
+	
 	function Cargar()
 	{
-		var texto=$(this).attr('id')			
-		$.ajax({ 
-			data: {'texto': texto, 'seleccion': 6},
-			url: '/buscar-personal/',
-			type: 'get',
-			success: function(data)
-			{	$('#btncambios').removeClass('disabled')
-				$("#codigoemp").val(data.pk)		   	
-				$("#nombres").val(data.nombre+" "+data.apellido)
-			}
-		});
+		var texto=$(this).attr('id')
+		fila = $(this).closest('tr').index();
+		$("#codigoemp").val($(this).attr('id'))	
+		$("#nombres").val("  "+$('#Tematico tr:eq('+fila+') td:eq('+1+')').text()+" "+$('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+		
 		$.ajax({ 
 			data: {'texto': texto, 'seleccion': 1},
 			url: '/buscar-carga/',

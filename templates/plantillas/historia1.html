@@ -1,0 +1,452 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark"><i class="fa fa-desktop fa-fw "></i> 
+			Historial Clinico
+			<span id="subtitulo">>
+			</span>
+		</h1>
+	</div>
+	
+</div>
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-sm-12 col-md-12 col-lg-6">
+
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget jarviswidget-color-orange" id="wid-id-99" data-widget-editbutton="false">
+				<!-- widget options:
+				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+				data-widget-colorbutton="false"
+				data-widget-editbutton="false"
+				data-widget-togglebutton="false"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="false"
+				data-widget-custombutton="false"
+				data-widget-collapsed="true"
+				data-widget-sortable="false"
+
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-folder"></i></span><h2>Historial Medico</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body">
+
+
+						<div class="tree">
+						<ul id="lista">
+								<li>
+									<span><i class="fa fa-lg fa-fw fa-desktop"></i> Consultas</span>
+							<ul id="consul">
+								
+							</ul>
+								</li>
+								
+								<li>
+									<span><i class="fa fa-lg fa-fw fa-desktop"></i> Analisis</span>
+							<ul id="analisis">
+							</ul>
+								</li>
+								<li>
+									<span><i class="fa fa-lg fa-fw fa-desktop"></i> Ecografias</span>
+							<ul id="eco">
+							</ul>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+			<!-- end widget -->
+
+		</article>
+
+		<article class="col-sm-12 col-md-12 col-lg-6">
+			<div class="jarviswidget" id="wid-id-98" data-widget-colorbutton="false" data-widget-editbutton="false">
+				
+				<header>
+					<span class="widget-icon"> <i class="fa fa-group"></i> </span>
+					<h2>Busqueda de Paciente</h2>
+
+				</header>
+
+				<!-- widget div-->
+				<div>
+
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+
+					</div>
+					<div class="widget-body">
+
+						<form class="form-horizontal">
+							
+							<fieldset>								
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="select-1">Seleccione </label>
+									<div class="col-md-10">
+										<select class="form-control" id="cb">
+											<option value="0">DNI</option>
+											<option value="1">Nombres</option>
+											<option value="2">Apellidos</option>
+										</select> 
+									</div>
+								</div>
+								<div class="well">		
+								<div class="input-group">
+									<input class="form-control" type="text" placeholder="Search..." id="texto">
+										<div class="input-group-btn">
+											<button class="btn btn-default btn-primary" type="button" id="buscar">
+											<i class="fa fa-search"></i> Buscar
+											</button>
+										</div>
+								</div>
+								</div>
+								
+							</fieldset>
+						</form>
+
+					</div>
+				</div>				
+			</div>
+			<div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-custombutton="false">
+				<!-- widget options:
+					usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+					
+					data-widget-colorbutton="false"	
+					data-widget-editbutton="false"
+					data-widget-togglebutton="false"
+					data-widget-deletebutton="false"
+					data-widget-fullscreenbutton="false"
+					data-widget-custombutton="false"
+					data-widget-collapsed="true" 
+					data-widget-sortable="false"
+					
+				-->
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Historia Medica</h2>				
+					
+				</header>
+
+				<!-- widget div-->
+				<div>
+					
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+						
+					</div>
+					<!-- end widget edit box -->
+					
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						
+						<form action="#" method="POST" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">						
+						{% csrf_token %}
+							<label class="label"  > <input type="hidden" id="idpaciente"  /></label>
+
+							<fieldset>
+							<section>
+									<label class="label">Signos Vitales:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>	
+								<section>
+									<label class="label">Antecedentes:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								<section>
+									<label class="label">Sintomas:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								<section>
+									<label class="label">Examenes Auxiliares:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								<section>
+									<label class="label">Examenes Fisicos:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								<section>
+									<label class="label">Diagnostico:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								<section>
+									<label class="label">Rp:</label>
+									<label class="textarea textarea-expandable"> 										
+										<textarea rows="3" class="custom-scroll"></textarea> 
+									</label>
+								</section>
+								
+							</fieldset>
+
+							
+							<footer>				
+								<button type="button" class="btn btn-success disabled" type="button" id="btncambios"><i class="fa fa-save" ></i>
+									Guardar Cambios
+								</button>
+								<button type="submit"  class="btn btn-primary" id="btnGuardar">
+									Guardar
+								</button>
+								<button type="button" class="btn btn-default" onclick="window.history.back();">
+									Regresar
+								</button>
+							</footer>
+						</form>
+
+					</div>
+					<!-- end widget content -->
+					
+				</div>
+				<!-- end widget div -->
+				
+			</div>
+			
+			
+		</article>
+		<!-- WIDGET END -->
+
+	</div>
+
+	<!-- end row -->
+
+	<!-- row -->
+
+	<div class="row">
+
+	</div>
+
+	<!-- end row -->
+
+</section>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>Lista de Pacientes</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- The form is placed inside the body of modal -->
+                <form id="loginForm" method="post" class="form-horizontal">
+                    <div class="table-responsive">
+							
+							<table class="table">
+							<thead>			                
+								<tr>
+									<th style="display:none;">ID</th>
+									<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombres</th><th>Apellidos</th>	
+									<th data-class="expand"></th>
+									 </tr> </thead> <tbody id = "Tematico">
+							</tbody>
+						</table>
+					</div>
+                    <input type="hidden" id="fecha"  />
+                    <div class="modal-footer">
+        				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>       
+     				</div>                
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end widget grid -->
+
+<script type="text/javascript">
+$(document).on("click",".btn-danger",CargarP);
+	function CargarP()
+	{
+		fila = $(this).closest('tr').index();		
+		//$("#idpaciente").val($(this).attr('id'))
+		$("#subtitulo").html(">>>  "+$('#Tematico tr:eq('+fila+') td:eq('+1+')').text()+" "+$('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+		alert("d")
+		$.ajax({ 
+			data: {'texto':$(this).attr('id'), 'seleccion': 3},
+			url: '/buscar-Detalesolicitud/',
+			type: 'get',
+			success: function(data)
+			{
+				$("#analisis li").remove();
+				for (var i=0; i<data.length; i++)
+				{
+					if(data[i].estado)
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-blue txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#analisis").append( td1);
+					}
+					else
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-red txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#analisis").append( td1);
+					}
+               }	
+			}
+		});
+		$.ajax({ 
+			data: {'texto': $(this).attr('id'), 'seleccion': 4},
+			url: '/buscar-Detalesolicitud/',
+			type: 'get',
+			success: function(data)
+			{
+				$("#consul li").remove();
+				for (var i=0; i<data.length; i++)
+				{
+					if(data[i].estado)
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-blue txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#consul").append( td1);
+					}
+					else
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-red txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#consul").append( td1);
+					}
+               }	
+			}
+		});
+		$.ajax({ 
+			data: {'texto': $(this).attr('id'), 'seleccion': 2},
+			url: '/buscar-Detalesolicitud/',
+			type: 'get',
+			success: function(data)
+			{
+				$("#eco li").remove();
+				for (var i=0; i<data.length; i++)
+				{
+					if(data[i].estado)
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-blue txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#eco").append( td1);
+					}
+					else
+					{
+						var td1 ='<li id="'+data[i].pk+'"><span class="btn bg-color-red txt-color-white"><i class="fa fa-lg fa fa-tags"></i> '+data[i].servicio+', '+data[i].cita+'</span></li>'
+					$("#eco").append( td1);
+					}
+               }	
+			}
+		});
+
+	}
+$("#buscar").on("click", metodo)
+	function metodo()
+	{ $('#loginModal').modal()
+		var opcion=$(texto).val()
+		var seleccion = $(cb).val()
+		$.ajax({ 
+			data: {'texto': opcion, 'seleccion': seleccion},
+			url: '/buscar-ajax/',
+			type: 'get',
+
+			success: function(data)
+			{
+				$("#Tematico tr").remove();
+				for (var i=0; i<data.length; i++)
+				{									
+					var tr = '<tr>';
+					var td1 = '<td style="display:none;"><a href="javascript:void(0);">' + data[i].pk + "</a></td>";
+               var td2 = '<td>' + data[i].fields.pac_nombre +'</td>';
+               var td3 = '<td>' + data[i].fields.pac_apellido + '</td>';
+               
+               
+               
+               var td8 = '<td><a href="#" role="button" class="btn btn-danger btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"> &nbsp;&nbsp;Cargar</a></td></tr>'
+               
+
+               $("#Tematico").append(tr + td1 + td2 + td3  +td8);					
+				}
+
+			}
+		});
+	}
+$(document).on("click", ".tree",Cargar);
+	function Cargar()
+	{
+		alert("SS")
+	}
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+
+	// PAGE RELATED SCRIPTS
+	// pagefunction
+	
+	var pagefunction = function() {
+		
+		loadScript("static/js/plugin/bootstraptree/bootstrap-tree.min.js");
+
+	};
+	
+	// end pagefunction
+	
+	// run pagefunction on load
+
+	pagefunction();
+	
+</script>

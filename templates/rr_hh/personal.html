@@ -34,6 +34,12 @@
 									<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Direccion</th>
 									<th data-hide="phone,tablet"> DNI</th>		
 									<th data-hide="phone,tablet"></th>
+									<th style="display:none;">fecnac</th>
+									<th style="display:none;">fecIng</th>
+									<th style="display:none;">email</th>
+									<th style="display:none;">sex</th>
+									<th style="display:none;">id_cargo</th>
+									<th style="display:none;">username</th>
 									 </tr> </thead> <tbody id = "Tematico">
 							</tbody>
 						</table>
@@ -141,7 +147,7 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						
-						<form action="#" method="POST" id="checkout-form" class="smart-form" novalidate="novalidate">						
+						<form action="#" method="POST" id="checkout-form" class="smart-form" novalidate="novalidate" enctype="multipart/form-data">						
 						{% csrf_token %}
 							<label class="label"  >{{form.id}}</label>
 							<fieldset>
@@ -222,14 +228,26 @@
 										</label>
 										<div class="note note-error" id="eFecIng"></div>
 									</section>
-								</div>					
-								<section>
-									<label for="file" class="input input-file">
-										<div class="button"><input type="file" name="file" id="lblAvatar" onchange="this.parentNode.nextSibling.value = this.value">Browse</div>{{form.avatar}}
-									</label>
-									<div class="note note-error" id="eAva"></div>
-								</section>					
+								</div>
+													
 							</fieldset>
+							<fieldset>
+							
+<div class="row">
+									<section class="col col-6">
+										<label class="label">Foto</label>
+									{{form2.avatar}}
+									<div class="note note-error" id="eAva"></div>
+									</section>			
+									<section class="col col-6">
+										
+									</section>
+									<section class="col col-6">
+										
+									</section>
+								</div>
+							</fieldset>
+
 							<fieldset>				
 								<section>
 									<label class="input"> <i class="icon-append fa fa-user" id="lbluser"></i>
@@ -281,7 +299,14 @@
 
 <script >
 
-
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$("#avatar").on("click", imagen)
+	function imagen()
+	{
+		alert($("#avatar").val())
+	}
 $('#checkout-form').on('submit', function(event){
     event.preventDefault();     
     create_post();});
@@ -501,44 +526,40 @@ $.ajaxSetup({
                var td4 = '<td>' + data[i].fields.emp_tel + '</td>';
                var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
                var td6 = '<td>' + data[i].fields.DNI +'</td>';
-               
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Modificar</a></td></tr>'
-               
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td>'
+               var td9 = '<td style="display:none;">' + data[i].fields.emp_fecnac +'</td>';
+               var td10 = '<td style="display:none;">' + data[i].fields.emp_fecing + '</td>';
+               var td11 = '<td style="display:none;">' + data[i].fields.email + '</td>';
+               var td12 = '<td style="display:none;">' + data[i].fields.emp_sexo + '</td>';
+               var td13 = '<td style="display:none;">' + data[i].fields.cargo + '</td>';
+               var td14 = '</tr>'               ;
 
-               $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8);					
-					//alert("dddd");
+                          
+               $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8+td9+td10+td11+td12+td13+td14);			
 				}
 
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
-	function Cargar()
+	$(document).on("click",".bg-color-magenta",cargamodi);
+	function cargamodi()
 	{
-		var opcion=$(this).attr('id')
-		var seleccion = 6		
-		$.ajax({ 
-			data: {'texto': opcion, 'seleccion': seleccion},
-			url: '/buscar-personal/',
-			type: 'get',
-			success: function(data)
-			{	$('#btncambios').removeClass('disabled')
-				$("#codigo").val(data.pk)
-				$('#btnGuardar').addClass('disabled')   	
-				$("#nombres").val(data.nombre)
-				$("#apellidos").val(data.apellido)
-				$("#dni").val(data.DNI)
-				$("#direccion").val(data.direccion)
-				$("#tel").val(data.telefono)
-				$('#fecnac').datepicker('setDate', data.fecnac);
-				$('#fecIng').datepicker('setDate', data.fecIng);
-				$("#email").val(data.email)
-				$("#sex").val(data.sexo)
-				$("#id_cargo").val(data.cargo)
-				$("#username").val(data.user)
+		fila = $(this).closest('tr').index();
+		$('#btncambios').removeClass('disabled')
+		$('#btnGuardar').addClass('disabled')
+		$("#codigo").val($(this).attr('id'))
+		$("#nombres").val($('#Tematico tr:eq('+fila+') td:eq('+1+')').text())
+		$("#apellidos").val($('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+		$("#dni").val($('#Tematico tr:eq('+fila+') td:eq('+5+')').text())
+		$("#direccion").val($('#Tematico tr:eq('+fila+') td:eq('+4+')').text())
+		$("#tel").val($('#Tematico tr:eq('+fila+') td:eq('+3+')').text())				
+		$('#fecnac').datepicker('setDate', $('#Tematico tr:eq('+fila+') td:eq('+7+')').text());
+		$('#fecIng').datepicker('setDate',$('#Tematico tr:eq('+fila+') td:eq('+8+')').text());
+		$("#email").val($('#Tematico tr:eq('+fila+') td:eq('+9+')').text())
+		$("#sex").val($('#Tematico tr:eq('+fila+') td:eq('+10+')').text())
+		$("#id_cargo").val($('#Tematico tr:eq('+fila+') td:eq('+11+')').text())
+		$("#username").val($('#Tematico tr:eq('+fila+') td:eq('+12+')').text())
 
-			}
-		});
 	}
 $("#btncambios").on("click", guarCambios)
 	function guarCambios()
@@ -546,7 +567,7 @@ $("#btncambios").on("click", guarCambios)
 		$.ajax({
         url: '/modi-personal/',
         type : "POST",
-        data : $('#checkout-form').serialize(), 
+        data : $('#checkout-form').serialize(),  
         success : function(json) 
         {        	
             if (json.errorsEmp)
@@ -686,7 +707,7 @@ $("#btncambios").on("click", guarCambios)
             else
             {
             	alert(json.result);
-            	//location.reload();
+            	location.reload();
             }
 				//console.log(json)
 		}

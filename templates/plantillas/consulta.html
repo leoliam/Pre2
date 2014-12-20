@@ -1,0 +1,571 @@
+
+<body>
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-pencil-square-o fa-fw "></i> 
+				Personal
+			<span>> 
+				Administracion de Personal
+			</span>
+		</h1>
+	</div>	
+</div>
+
+<section id="widget-grid" class="">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">				
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Lista de Personal</h2>
+				</header>
+				<div>
+					<div class="jarviswidget-editbox">
+					</div>
+					<div class="widget-body no-padding">
+						<div class="table-responsive">
+							
+							<table class="table">
+							<thead>			                
+								<tr>
+									<th style="display:none;">ID</th>
+									<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombres</th><th>Apellidos</th>
+									<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Telefono</th>
+									<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Direccion</th>
+									<th data-hide="phone,tablet"> DNI</th>		
+									<th data-hide="phone,tablet"></th>
+									<th style="display:none;">fecnac</th>
+									<th style="display:none;">fecIng</th>
+									<th style="display:none;">email</th>
+									<th style="display:none;">sex</th>
+									<th style="display:none;">id_cargo</th>
+									<th style="display:none;">username</th>
+									 </tr> </thead> <tbody id = "Tematico">
+							</tbody>
+						</table>
+						</div>
+
+					</div>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+
+			</div>
+		</article>
+	</div>
+
+	
+	<div class="row">
+
+
+		<!-- NEW COL START -->
+		
+	</div>
+
+
+</section>
+
+
+<script >
+
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+/*$("#avatar").on("click", imagen)
+	function imagen()
+	{
+		alert($("#avatar").val())
+	}*/
+$('#checkout-form').on('submit', function(event){
+    event.preventDefault();     
+    create_post();});
+    function create_post() { 
+    $.ajax({
+        url: '/create-personal/',
+        type : "POST",
+        data : $('#checkout-form').serialize(), 
+        success : function(json) 
+        {        	
+            if (json.errorsEmp)
+            {
+            	if(json.errorsEmp.emp_nom)
+            	{            		
+            		$('#lblnobre').removeClass('input state-success');
+            		$('#lblnobre').addClass('input state-error')
+            		$("#eNon").text(json.errorsEmp.emp_nom);
+            	}else
+            	{
+            		$('#lblnobre').addClass('input state-success');
+            		$("#eNon").text( "");
+                }
+                if(json.errorsEmp.emp_ape)
+            	{            		
+            		$('#lblape').removeClass('input state-success');
+            		$('#lblape').addClass('input state-error')
+            		$("#eApe").text(json.errorsEmp.emp_ape);
+            	}else
+            	{
+            		$('#lblape').addClass('input state-success');
+            		$("#eApe").text( "");
+                }
+            	if(json.errorsEmp.DNI)
+            	{
+            		$('#lbldni').removeClass('input state-success');
+            		$('#lbldni').addClass('input state-error')
+            		$("#eDNI").text(json.errorsEmp.DNI);
+            	}
+            	else
+            	{
+            		$('#lbldni').addClass('input state-success');
+            		$("#eDNI").text("");
+                }
+                if(json.errorsEmp.emp_direccion)
+            	{            		
+            		$('#lbldirec').removeClass('input state-success');
+            		$('#lbldirec').addClass('input state-error')
+            		$("#eDirec").text(json.errorsEmp.emp_direccion);
+            	}else
+            	{
+            		$('#lbldirec').addClass('input state-success');
+            		$("#eDirec").text( "");
+                }
+                if(json.errorsEmp.emp_tel)
+            	{            		
+            		$('#lblTelef').removeClass('input state-success');
+            		$('#lblTelef').addClass('input state-error')
+            		$("#eTel").text(json.errorsEmp.emp_tel);
+            	}else
+            	{
+            		$('#lblTelef').addClass('input state-success');
+            		$("#eTel").text( "");
+                }
+                if(json.errorsEmp.emp_fecnac)
+            	{            		
+            		$('#lblFecNac').removeClass('input state-success');
+            		$('#lblFecNac').addClass('input state-error')
+            		$("#eFecNac").text(json.errorsEmp.emp_fecnac);
+            	}else
+            	{
+            		$('#lblFecNac').addClass('input state-success');
+            		$("#eFecNac").text( "");
+                }
+                if(json.errorsEmp.emp_fecing)
+            	{            		
+            		$('#lblFecIng').removeClass('input state-success');
+            		$('#lblFecIng').addClass('input state-error')
+            		$("#eFecIng").text(json.errorsEmp.emp_fecing);
+            	}else
+            	{
+            		$('#lblFecIng').addClass('input state-success');
+            		$("#eFecIng").text( "");
+                }
+                if(json.errorsEmp.cargo)
+            	{            		
+            		$('#lblcargo').removeClass('input state-success');
+            		$('#lblcargo').addClass('input state-error')
+            		$("#eCargo").text(json.errorsEmp.cargo);
+            	}else
+            	{
+            		$('#lblcargo').addClass('input state-success');
+            		$("#eCargo").text( "");
+                }                
+                if(json.errorsEmp.avatar)
+            	{            		
+            		$('#lblAvatar').removeClass('input state-success');
+            		$('#lblAvatar').addClass('input state-error')
+            		$("#eAva").text(json.errorsEmp.avatar);
+            	}else
+            	{
+            		$('#lblAvatar').addClass('input state-success');
+            		$("#eAva").text( "");
+                }
+                if(json.errorsEmp.email)
+            	{            		
+            		$('#lblEmail').removeClass('input state-success');
+            		$('#lblEmail').addClass('input state-error')
+            		$("#eEma").text(json.errorsEmp.email);
+            	}else
+            	{
+            		$('#lblEmail').addClass('input state-success');
+            		$("#eEma").text( "");
+                }
+                if(json.errorsEmp.username)
+            	{            		
+            		$('#lbluser').removeClass('input state-success');
+            		$('#lbluser').addClass('input state-error')
+            		$("#eUser").text(json.errorsEmp.username);
+            	}else
+            	{
+            		$('#lbluser').addClass('input state-success');
+            		$("#eUser").text( "");
+                }
+                if(json.errorsEmp.password1)
+            	{            		
+            		$('#lblpass').removeClass('input state-success');
+            		$('#lblpass').addClass('input state-error')
+            		$("#ePass1").text(json.errorsEmp.password1);
+            	}else
+            	{
+            		$('#lblpass').addClass('input state-success');
+            		$("#ePass1").text( "");
+                }
+                if(json.errorsEmp.password2)
+            	{            		
+            		$('#lblpass2').removeClass('input state-success');
+            		$('#lblpass2').addClass('input state-error')
+            		$("#ePass2").text(json.errorsEmp.password2);
+            	}else
+            	{
+            		$('#lblpass2').addClass('input state-success');
+            		$("#ePass2").text( "");
+                }
+            }            
+            else
+            {
+            	alert(json.result);
+            	location.reload();
+            }
+        }
+    });
+};
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+ function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+function sameOrigin(url) {
+    // test that a given url is a same-origin URL
+    // url could be relative or scheme relative or absolute
+    var host = document.location.host; // host + port
+    var protocol = document.location.protocol;
+    var sr_origin = '//' + host;
+    var origin = protocol + sr_origin;
+    // Allow absolute or scheme relative URLs to same origin
+    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+            // Send the token to same-origin, relative URLs only.
+            // Send the token only if the method warrants CSRF protection
+            // Using the CSRFToken value acquired earlier
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+	$("#buscar").on("click", metodo)
+	function metodo()
+	{
+		$('#btncambios').addClass('disabled')
+		$('#btnGuardar').removeClass('disabled')
+		var opcion=$(texto).val()
+		var seleccion = $(cb).val()
+		$.ajax({ 
+			data: {'texto': opcion, 'seleccion': seleccion},
+			url: '/buscar-personal/',
+			type: 'get',
+
+			success: function(data)
+			{
+				$("#Tematico tr").remove();
+				for (var i=0; i<data.length; i++)
+				{									
+					var tr = '<tr>';
+					var td1 = '<td style="display:none;"><a href="javascript:void(0);">' + data[i].pk + "</a></td>";
+               var td2 = '<td>' + data[i].fields.emp_nom +'</td>';
+               var td3 = '<td>' + data[i].fields.emp_ape + '</td>';
+               var td4 = '<td>' + data[i].fields.emp_tel + '</td>';
+               var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
+               var td6 = '<td>' + data[i].fields.DNI +'</td>';
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td>'
+               var td9 = '<td style="display:none;">' + data[i].fields.emp_fecnac +'</td>';
+               var td10 = '<td style="display:none;">' + data[i].fields.emp_fecing + '</td>';
+               var td11 = '<td style="display:none;">' + data[i].fields.email + '</td>';
+               var td12 = '<td style="display:none;">' + data[i].fields.emp_sexo + '</td>';
+               var td13 = '<td style="display:none;">' + data[i].fields.cargo + '</td>';
+               var td14 = '</tr>'               ;
+
+                          
+               $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8+td9+td10+td11+td12+td13+td14);			
+				}
+
+			}
+		});
+	}
+	$(document).on("click",".bg-color-magenta",cargamodi);
+	function cargamodi()
+	{
+		fila = $(this).closest('tr').index();
+		$('#btncambios').removeClass('disabled')
+		$('#btnGuardar').addClass('disabled')
+		$("#codigo").val($(this).attr('id'))
+		$("#nombres").val($('#Tematico tr:eq('+fila+') td:eq('+1+')').text())
+		$("#apellidos").val($('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+		$("#dni").val($('#Tematico tr:eq('+fila+') td:eq('+5+')').text())
+		$("#direccion").val($('#Tematico tr:eq('+fila+') td:eq('+4+')').text())
+		$("#tel").val($('#Tematico tr:eq('+fila+') td:eq('+3+')').text())				
+		$('#fecnac').datepicker('setDate', $('#Tematico tr:eq('+fila+') td:eq('+7+')').text());
+		$('#fecIng').datepicker('setDate',$('#Tematico tr:eq('+fila+') td:eq('+8+')').text());
+		$("#email").val($('#Tematico tr:eq('+fila+') td:eq('+9+')').text())
+		$("#sex").val($('#Tematico tr:eq('+fila+') td:eq('+10+')').text())
+		$("#id_cargo").val($('#Tematico tr:eq('+fila+') td:eq('+11+')').text())
+		$("#username").val($('#Tematico tr:eq('+fila+') td:eq('+12+')').text())
+
+	}
+$("#btncambios").on("click", guarCambios)
+	function guarCambios()
+	{
+		$.ajax({
+        url: '/modi-personal/',
+        type : "POST",
+        data : $('#checkout-form').serialize(),  
+        success : function(json) 
+        {        	
+            if (json.errorsEmp)
+            {
+            	if(json.errorsEmp.emp_nom)
+            	{            		
+            		$('#lblnobre').removeClass('input state-success');
+            		$('#lblnobre').addClass('input state-error')
+            		$("#eNon").text(json.errorsEmp.emp_nom);
+            	}else
+            	{
+            		$('#lblnobre').addClass('input state-success');
+            		$("#eNon").text( "");
+                }
+                if(json.errorsEmp.emp_ape)
+            	{            		
+            		$('#lblape').removeClass('input state-success');
+            		$('#lblape').addClass('input state-error')
+            		$("#eApe").text(json.errorsEmp.emp_ape);
+            	}else
+            	{
+            		$('#lblape').addClass('input state-success');
+            		$("#eApe").text( "");
+                }
+            	if(json.errorsEmp.DNI)
+            	{
+            		$('#lbldni').removeClass('input state-success');
+            		$('#lbldni').addClass('input state-error')
+            		$("#eDNI").text(json.errorsEmp.DNI);
+            	}
+            	else
+            	{
+            		$('#lbldni').addClass('input state-success');
+            		$("#eDNI").text("");
+                }
+                if(json.errorsEmp.emp_direccion)
+            	{            		
+            		$('#lbldirec').removeClass('input state-success');
+            		$('#lbldirec').addClass('input state-error')
+            		$("#eDirec").text(json.errorsEmp.emp_direccion);
+            	}else
+            	{
+            		$('#lbldirec').addClass('input state-success');
+            		$("#eDirec").text( "");
+                }
+                if(json.errorsEmp.emp_tel)
+            	{            		
+            		$('#lblTelef').removeClass('input state-success');
+            		$('#lblTelef').addClass('input state-error')
+            		$("#eTel").text(json.errorsEmp.emp_tel);
+            	}else
+            	{
+            		$('#lblTelef').addClass('input state-success');
+            		$("#eTel").text( "");
+                }
+                if(json.errorsEmp.emp_fecnac)
+            	{            		
+            		$('#lblFecNac').removeClass('input state-success');
+            		$('#lblFecNac').addClass('input state-error')
+            		$("#eFecNac").text(json.errorsEmp.emp_fecnac);
+            	}else
+            	{
+            		$('#lblFecNac').addClass('input state-success');
+            		$("#eFecNac").text( "");
+                }
+                if(json.errorsEmp.emp_fecing)
+            	{            		
+            		$('#lblFecIng').removeClass('input state-success');
+            		$('#lblFecIng').addClass('input state-error')
+            		$("#eFecIng").text(json.errorsEmp.emp_fecing);
+            	}else
+            	{
+            		$('#lblFecIng').addClass('input state-success');
+            		$("#eFecIng").text( "");
+                }
+                if(json.errorsEmp.cargo)
+            	{            		
+            		$('#lblcargo').removeClass('input state-success');
+            		$('#lblcargo').addClass('input state-error')
+            		$("#eCargo").text(json.errorsEmp.cargo);
+            	}else
+            	{
+            		$('#lblcargo').addClass('input state-success');
+            		$("#eCargo").text( "");
+                }                
+                if(json.errorsEmp.avatar)
+            	{            		
+            		$('#lblAvatar').removeClass('input state-success');
+            		$('#lblAvatar').addClass('input state-error')
+            		$("#eAva").text(json.errorsEmp.avatar);
+            	}else
+            	{
+            		$('#lblAvatar').addClass('input state-success');
+            		$("#eAva").text( "");
+                }
+                if(json.errorsEmp.email)
+            	{            		
+            		$('#lblEmail').removeClass('input state-success');
+            		$('#lblEmail').addClass('input state-error')
+            		$("#eEma").text(json.errorsEmp.email);
+            	}else
+            	{
+            		$('#lblEmail').addClass('input state-success');
+            		$("#eEma").text( "");
+                }
+                if(json.errorsEmp.username)
+            	{            		
+            		$('#lbluser').removeClass('input state-success');
+            		$('#lbluser').addClass('input state-error')
+            		$("#eUser").text(json.errorsEmp.username);
+            	}else
+            	{
+            		$('#lbluser').addClass('input state-success');
+            		$("#eUser").text( "");
+                }
+                if(json.errorsEmp.password1)
+            	{            		
+            		$('#lblpass').removeClass('input state-success');
+            		$('#lblpass').addClass('input state-error')
+            		$("#ePass1").text(json.errorsEmp.password1);
+            	}else
+            	{
+            		$('#lblpass').addClass('input state-success');
+            		$("#ePass1").text( "");
+                }
+                if(json.errorsEmp.password2)
+            	{            		
+            		$('#lblpass2').removeClass('input state-success');
+            		$('#lblpass2').addClass('input state-error')
+            		$("#ePass2").text(json.errorsEmp.password2);
+            	}else
+            	{
+            		$('#lblpass2').addClass('input state-success');
+            		$("#ePass2").text( "");
+                }
+            }            
+            else
+            {
+            	alert(json.result);
+            	location.reload();
+            }
+				//console.log(json)
+		}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
+	 *
+	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
+	 *
+	 * // activate tooltips
+	 * $("[rel=tooltip]").tooltip();
+	 *
+	 * // activate popovers
+	 * $("[rel=popover]").popover();
+	 *
+	 * // activate popovers with hover states
+	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
+	 *
+	 * // activate inline charts
+	 * runAllCharts();
+	 *
+	 * // setup widgets
+	 * setup_widgets_desktop();
+	 *
+	 * // run form elements
+	 * runAllForms();
+	 *
+	 ********************************
+	 *
+	 * pageSetUp() is needed whenever you load a page.
+	 * It initializes and checks for all basic elements of the page
+	 * and makes rendering easier.
+	 *
+	 */
+
+	pageSetUp();
+
+	// PAGE RELATED SCRIPTS
+	
+	// pagefunction
+	
+	var pagefunction = function() {
+
+		var updateOutput = function(e) {
+			var list = e.length ? e : $(e.target), output = list.data('output');
+			if (window.JSON) {
+				output.val(window.JSON.stringify(list.nestable('serialize')));
+				//, null, 2));
+			} else {
+				output.val('JSON browser support required for this demo.');
+			}
+		};
+
+		// activate Nestable for list 1
+		$('#nestable').nestable({
+			group : 1
+		}).on('change', updateOutput);
+
+		// activate Nestable for list 2
+		$('#nestable2').nestable({
+			group : 1
+		}).on('change', updateOutput);
+
+		// output initial serialised data
+		updateOutput($('#nestable').data('output', $('#nestable-output')));
+		updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+
+		$('#nestable-menu').on('click', function(e) {
+			var target = $(e.target), action = target.data('action');
+			if (action === 'expand-all') {
+				$('.dd').nestable('expandAll');
+			}
+			if (action === 'collapse-all') {
+				$('.dd').nestable('collapseAll');
+			}
+		});
+
+		$('#nestable3').nestable();
+		
+	};
+	
+	// end pagefunction
+	
+	// load nestable.min.js then run pagefunction
+	loadScript("js/plugin/jquery-nestable/jquery.nestable.min.js", pagefunction);
+	
+</script>

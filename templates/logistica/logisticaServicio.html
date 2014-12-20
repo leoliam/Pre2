@@ -27,7 +27,7 @@
 							<table class="table">
 							<thead>			                
 								<tr>
-									<th >ID</th>
+									<th style="display:none;">ID</th>
 									<th data-hide="phone,tablet"><i></i> Area</th>
 									<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Servicio</th>
 									<th data-hide="phone,tablet"><i></i> Descripcion</th>
@@ -212,6 +212,11 @@
 
 </section>
 <script >
+
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")
 $('#post-form').on('submit', function(event){
     event.preventDefault();     
     create_post();});
@@ -334,39 +339,32 @@ $.ajaxSetup({
 				for (var i=0; i<data.length; i++)
 				{									
 					var tr = '<tr>';
-					var td1 = '<td>' + data[i].pk + '</td>';
+					var td1 = '<td style="display:none;"><a href="javascript:void(0);">' + data[i].fk  + "</a></td>";
                var td2 = '<td>' + data[i].Area +'</td>';
                var td3 = '<td>' + data[i].servicio +'</td>';
                var td4 = '<td>' + data[i].descripcion+'</td>';
                var td5 = '<td>' + data[i].costo +'</td>';
                var td6 = '<td>' + data[i].tiempo +'</td>';
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Modificar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                $("#Tematico").append(tr + td1 + td2 +td3+td4+td5+td6+td8);					
 					//alert("dddd");
 				}
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
-	function Cargar()
+	$(document).on("click",".bg-color-magenta",cargamodi);
+	function cargamodi()
 	{
-		var opcion=$(this).attr('id')
-		$.ajax({ 
-			data: {'texto': opcion,'seleccion': 2},
-			url: '/buscar-servicio/',
-			type: 'get',
-			success: function(data)
-			{
-				$('#btncambios').removeClass('disabled')
-				$("#codigo").val(data[0].pk)
-				$('#btnGuardar').addClass('disabled')   	
-				$("#nombres").val(data[0].servicio)
-				$("#observacion").val(data[0].descripcion)
-				$("#costo").val(data[0].costo)
-				$("#TR").val(data[0].tiempo)
-				$("#id_area").val(data[0].id_area)
-			}
-		});
+		fila = $(this).closest('tr').index();
+		$('#btncambios').removeClass('disabled')
+		$("#codigo").val($(this).attr('id'))
+		$('#btnGuardar').addClass('disabled')   	
+		$("#nombres").val($('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+		$("#observacion").val($('#Tematico tr:eq('+fila+') td:eq('+3+')').text())
+		$("#costo").val($('#Tematico tr:eq('+fila+') td:eq('+4+')').text())
+		$("#TR").val($('#Tematico tr:eq('+fila+') td:eq('+5+')').text())
+		$("#id_area").val($('#Tematico tr:eq('+fila+') td:eq('+0+')').text())
+			
 	}
 $("#btncambios").on("click", guarCambios)
 	function guarCambios()
@@ -433,84 +431,6 @@ $("#btncambios").on("click", guarCambios)
 
 <script type="text/javascript">
 
-	/* DO NOT REMOVE : GLOBAL FUNCTIONS!
-	 *
-	 * pageSetUp(); WILL CALL THE FOLLOWING FUNCTIONS
-	 *
-	 * // activate tooltips
-	 * $("[rel=tooltip]").tooltip();
-	 *
-	 * // activate popovers
-	 * $("[rel=popover]").popover();
-	 *
-	 * // activate popovers with hover states
-	 * $("[rel=popover-hover]").popover({ trigger: "hover" });
-	 *
-	 * // activate inline charts
-	 * runAllCharts();
-	 *
-	 * // setup widgets
-	 * setup_widgets_desktop();
-	 *
-	 * // run form elements
-	 * runAllForms();
-	 *
-	 ********************************
-	 *
-	 * pageSetUp() is needed whenever you load a page.
-	 * It initializes and checks for all basic elements of the page
-	 * and makes rendering easier.
-	 *
-	 */
-
-	pageSetUp();
 	
-	/*
-	 * ALL PAGE RELATED SCRIPTS CAN GO BELOW HERE
-	 * eg alert("my home function");
-	 * 
-	 * var pagefunction = function() {
-	 *   ...
-	 * }
-	 * loadScript("js/plugin/_PLUGIN_NAME_.js", pagefunction);
-	 * 
-	 * TO LOAD A SCRIPT:
-	 * var pagefunction = function (){ 
-	 *  loadScript(".../plugin.js", run_after_loaded);	
-	 * }
-	 * 
-	 * OR
-	 * 
-	 * loadScript(".../plugin.js", run_after_loaded);
-	 */
-
-	// PAGE RELATED SCRIPTS
-
-	// pagefunction
-	
-	var pagefunction = function() {
-		
-		// class switcher for radio and checkbox
-		$('input[name="demo-switcher-1"]').change( function() {
-		  //alert($(this).val())
-		  $this = $(this);
-		  
-		  myNewClass = $this.attr('id');
-		  
-		  $('.demo-switcher-1 input[type="checkbox"]').removeClass();
-		  $('.demo-switcher-1 input[type="checkbox"]').addClass("checkbox "+ myNewClass);
-		  
-		  $('.demo-switcher-1 input[type="radio"]').removeClass();
-		  $('.demo-switcher-1 input[type="radio"]').addClass("radiobox "+ myNewClass);
-		  
-		});
-		
-	};
-	
-	// end pagefunction
-	
-	// run pagefunction on load
-	
-	pagefunction();
 	
 </script>

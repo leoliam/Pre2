@@ -29,8 +29,8 @@ class UserForm(UserCreationForm):
 		attrs={ 'id': 'fecnac','type': 'text','name':'startdate','placeholder': 'Fecha de Nacimiento'}))
 	emp_fecing= forms.DateField(widget=forms.DateInput( 
 		attrs={'id': 'fecIng','type': 'text','name':'finishdate','placeholder': 'Fecha de Ingreso'}))
-	avatar = forms.CharField(required=False,widget= forms.TextInput(
-		attrs={'id': 'avatar','type':'text','placeholder': 'Foto','readonly': ''}))
+	#avatar = forms.CharField(required=False,widget= forms.TextInput(
+		#attrs={'id': 'avatar','type':'file','name':'avatar'}))
 	username = forms.CharField(max_length=30,min_length=5,widget= forms.TextInput(
 		attrs={ 'id': 'username','type': 'text', 'name': 'username','placeholder': 'Username'}))
 	password1= forms.CharField(max_length=30,min_length=6,widget= forms.TextInput(
@@ -61,8 +61,8 @@ class UserFormModi(forms.ModelForm):
 		attrs={ 'id': 'fecnac','type': 'text','name':'startdate','placeholder': 'Fecha de Nacimiento'}))
 	emp_fecing= forms.DateField(widget=forms.DateInput( 
 		attrs={'id': 'fecIng','type': 'text','name':'finishdate','placeholder': 'Fecha de Ingreso'}))
-	avatar = forms.CharField(required=False,widget= forms.TextInput(
-		attrs={'id': 'avatar','type':'text','placeholder': 'Foto','readonly': ''}))	
+	#avatar = forms.CharField(required=False,widget= forms.TextInput(
+		#attrs={'class' : 'input-sm','id': 'avatar','type':'text','placeholder': 'Foto','readonly': ''}))	
 	cargo = forms.ModelChoiceField(queryset=Cargo.objects.all())
 	class Meta:
 		model = Empleado
@@ -120,7 +120,7 @@ class RegistrarProgramacionForm(forms.ModelForm):
 		attrs={ 'id': 'from','type': 'text','placeholder': 'Hasta','class':"form-control"}))
 	class Meta:
 		model = Programacion
-		exclude = ['minutosdatencion','serviempledo']
+		exclude = ['cantidadPacientes','serviempledo']
 
 
 

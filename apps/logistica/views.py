@@ -1,16 +1,11 @@
 from django.shortcuts import render,redirect
-from django.views.generic import TemplateView
-from .models import Area,Cargo,Servicio
-from apps.solicitudes.models import Paciente
-from .forms import RegistrarPacienteForm,RegistrarAreaForm,RegistrarCargoForm,RegistrarServicioForm
+from .models import Area,Cargo,Servicio,Modelo
+from .forms import RegistrarAreaForm,RegistrarCargoForm,RegistrarServicioForm,RegistrarModeloForm
 from django.shortcuts import render_to_response
 from django.core import serializers
 from django.http import HttpResponse, Http404
-
 import json
-class PacienteBView(TemplateView):
-	template_name = 'logistica/pacienteB.html'
-	
+
 
 def BuscarArea(request):		
 	if request.is_ajax():			
@@ -25,6 +20,10 @@ def BuscarArea(request):
 			area = Area.objects.filter(id=texto)
 			data = serializers.serialize('json',area,
 			fields={'area_nom','area_descripcion'})
+			return HttpResponse(data, content_type='application/json')
+		elif seleccion=="2":
+			consulta = Area.objects.all()
+			data = serializers.serialize('json',consulta)
 			return HttpResponse(data, content_type='application/json')		
 	else :
 		print "mal"
@@ -100,7 +99,7 @@ def BuscarServicio(request):
 				lista.append(d)
 			return HttpResponse(json.dumps(lista), content_type='application/json')		
 		elif seleccion=="5":
-			servicio = Servicio.objects.filter(area__id=texto)
+			servicio = Servicio.objects.filter(area_id=texto)
 			data = serializers.serialize('json',servicio,fields={'servi_nom',})
 			return HttpResponse(data, content_type='application/json')	
 	else :
@@ -210,70 +209,7 @@ def ModiCargo(request):
 		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
 
 # Create your views here.
-def BuscarAjax(request):		
-	if request.is_ajax():			
-		texto= request.GET['texto']
-		seleccion = request.GET['seleccion']
-		if seleccion=="0":
-			paciente = Paciente.objects.filter(DNI__icontains=texto)
-			data = serializers.serialize('json',paciente,
-			fields={'pac_nombre','pac_apellido','pac_telefono',
-			'pac_direccion','DNI','pac_fecnac'})
-			return HttpResponse(data, content_type='application/json')
-		elif seleccion=="1":
-			paciente = Paciente.objects.filter(pac_nombre__icontains=texto)
-			data = serializers.serialize('json',paciente,
-			fields={'pac_nombre','pac_apellido','pac_telefono',
-			'pac_direccion','DNI','pac_fecnac'})
-			return HttpResponse(data, content_type='application/json')
-		elif seleccion=="2":
-			paciente = Paciente.objects.filter(pac_nombre__icontains=texto)
-			data = serializers.serialize('json',paciente,
-			fields={'pac_nombre','pac_apellido','pac_telefono',
-			'pac_direccion','DNI','pac_fecnac'})
-			return HttpResponse(data, content_type='application/json')
-		else :
-			paciente = Paciente.objects.filter(id=texto)
-			data = serializers.serialize('json',paciente,
-			fields={'pac_nombre','pac_apellido','pac_telefono',
-			'pac_direccion','DNI','pac_fecnac','pac_sexo','pac_obs'})
-			return HttpResponse(data, content_type='application/json')		
-	else :
-		print "mal"
-		raise Http404
 
-
-def CreatePost(request):	
-	if request.method == 'POST':
-		form = RegistrarPacienteForm(request.POST)
-		response_data = {} 
-		if form.is_valid():
-			paciente= Paciente()
-			paciente.pac_nombre = form.cleaned_data.get('pac_nombre')
-			paciente.pac_apellido = form.cleaned_data.get('pac_apellido')
-			paciente.DNI = int(form.cleaned_data.get('DNI'))
-			paciente.pac_direccion = form.cleaned_data.get('pac_direccion')
-			paciente.pac_telefono = form.cleaned_data.get('pac_telefono')
-			paciente.pac_sexo = form.cleaned_data.get('pac_sexo')
-			paciente.pac_obs = form.cleaned_data.get('pac_obs')
-			paciente.pac_fecnac = form.cleaned_data.get('pac_fecnac')
-			paciente.save()
-			response_data['result'] = "Los datos del Paciente fueron almacenados con Exito"
-			#response_data['postpk'] = paciente.pk	        print "XXSS"
-			#paciente.pac_fecnac = form.cleaned_data.get('DNI')	        
-			return HttpResponse(json.dumps(response_data),content_type="application/json")
-		else:
-			data = json.dumps({'errors': dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])})        
-			return HttpResponse(data,content_type="application/json")
-	else:
-		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
-
-
-def home(req):
-	tmpl_vars = {
-		'form': RegistrarPacienteForm()
-	}
-	return render(req, 'logistica/pacienteB.html', tmpl_vars)
 
 
 def HomeArea(req):
@@ -297,34 +233,6 @@ def HomeServicio(req):
 	return render(req, 'logistica/logisticaServicio.html', tmpl_vars)
 
 
-def ModiPost(request):	
-	if request.method == 'POST':
-		instance = Paciente.objects.get(id=request.POST['id'])
-		form = RegistrarPacienteForm(request.POST or None, instance=instance)
-		response_data = {} 
-		#print request.POST['id']
-		if form.is_valid():
-			paciente= Paciente.objects.get(id=form.cleaned_data.get('id'))
-			paciente.pac_nombre = form.cleaned_data.get('pac_nombre')
-			paciente.pac_apellido = form.cleaned_data.get('pac_apellido')
-			paciente.pac_fecnac = form.cleaned_data.get('pac_fecnac')
-			paciente.DNI = form.cleaned_data.get('DNI')            
-			paciente.pac_direccion = form.cleaned_data.get('pac_direccion')
-			paciente.pac_telefono = form.cleaned_data.get('pac_telefono')
-			paciente.pac_sexo = form.cleaned_data.get('pac_sexo')
-			paciente.pac_obs = form.cleaned_data.get('pac_obs')
-			paciente.save()	
-			response_data['result'] = "Los datos del Paciente fueron Modificados con Exito"
-			#response_data['postpk'] = paciente.pk
-			#response_data['created'] = post.created.strftime('%B %d, %Y %I:%M %p')	        
-			return HttpResponse(json.dumps(response_data),content_type="application/json")
-		else:
-			data = json.dumps({'errors': dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])})        
-			return HttpResponse(data,content_type="application/json")
-	else:
-		return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
-
-
 def HomeModelo(req):
 	tmpl_vars = {
 		'form': RegistrarModeloForm()
@@ -339,19 +247,16 @@ def BuscarModelo(request):
 		texto= request.GET['texto']
 		seleccion = request.GET['seleccion']
 		if seleccion=="0":
-			servicio = Servicio.objects.filter(servi_nom__icontains=texto)
-			data = serializers.serialize('json',servicio,
-			fields={'servi_nom','servi_descripcion','servi_costo','area','tiempo_requerido'})
+			modelo = Modelo.objects.filter(Nombre__icontains=texto)
+			data = serializers.serialize('json',modelo)
 			return HttpResponse(data, content_type='application/json')	
 		elif seleccion=="1":
-			servicio = Servicio.objects.filter(id=texto)
-			data = serializers.serialize('json',servicio,
-			fields={'servi_nom','servi_descripcion','servi_costo','area','tiempo_requerido'})
+			modelo = Modelo.objects.filter(Marca__icontains=texto)
+			data = serializers.serialize('json',modelo)
 			return HttpResponse(data, content_type='application/json')
 		elif seleccion=="2":
-			servicio = Servicio.objects.filter(id=texto)
-			data = serializers.serialize('json',servicio,
-			fields={'servi_nom','servi_descripcion','servi_costo','area','tiempo_requerido'})
+			modelo = Modelo.objects.filter(Modelo__icontains=texto)
+			data = serializers.serialize('json',modelo)
 			return HttpResponse(data, content_type='application/json')		
 	else :
 		print "mal"
@@ -360,14 +265,17 @@ def BuscarModelo(request):
 
 def CreateModelo(request):	
 	if request.method == 'POST':
-		form = RegistrarAreaForm(request.POST)
+		form = RegistrarModeloForm(request.POST)
 		response_data = {} 
 		if form.is_valid():
-			area= Area()
-			area.area_nom = form.cleaned_data.get('area_nom')			
-			area.area_descripcion = form.cleaned_data.get('area_descripcion')			
-			area.save()		
-			response_data['result'] = "La Nueva Area fue Registrada con Exito"
+			modelo= Modelo()
+			modelo.Nombre = form.cleaned_data.get('Nombre')	
+			modelo.Marca = form.cleaned_data.get('Marca')			
+			modelo.Modelo = form.cleaned_data.get('Modelo')					
+			modelo.Serie = form.cleaned_data.get('Serie')			
+			modelo.descripcion = form.cleaned_data.get('descripcion')			
+			modelo.save()		
+			response_data['result'] = "El equipo fue Registrado con Exito"
 			#response_data['postpk'] = paciente.pk	        print "XXSS"
 			#paciente.pac_fecnac = form.cleaned_data.get('DNI')	        
 			return HttpResponse(json.dumps(response_data),content_type="application/json")
@@ -379,15 +287,19 @@ def CreateModelo(request):
 
 
 def ModiModelo(request):	
-	if request.method == 'POST':		
-		form = RegistrarAreaForm(request.POST)
+	if request.method == 'POST':
+		instance = Modelo.objects.get(id=request.POST['id'])
+		form = RegistrarModeloForm(request.POST or None, instance=instance)
 		response_data = {} 
-		if form.is_valid():
-			area= Area.objects.get(id=form.cleaned_data.get('id'))
-			area.area_nom = form.cleaned_data.get('area_nom')			
-			area.area_descripcion = form.cleaned_data.get('area_descripcion')			
-			area.save()	
-			response_data['result'] = "Los datos del Area fueron Actualizados con Exito"				        
+		if form.is_valid():			
+			modelo= Modelo.objects.get(id=form.cleaned_data.get('id'))
+			modelo.Nombre = form.cleaned_data.get('Nombre')	
+			modelo.Marca = form.cleaned_data.get('Marca')			
+			modelo.Modelo = form.cleaned_data.get('Modelo')					
+			modelo.Serie = form.cleaned_data.get('Serie')			
+			modelo.descripcion = form.cleaned_data.get('descripcion')			
+			modelo.save()	
+			response_data['result'] = "Los datos del Equipo fueron Actualizados con Exito"				        
 			return HttpResponse(json.dumps(response_data),content_type="application/json")
 		else:
 			data = json.dumps({'errors': dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])})        

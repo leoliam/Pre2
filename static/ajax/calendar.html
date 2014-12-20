@@ -320,6 +320,7 @@
 	    };
 	
 	    var addEvent = function (title, priority, description, icon) {
+
 	        title = title.length === 0 ? "Untitled Event" : title;
 	        description = description.length === 0 ? "No Description" : description;
 	        icon = icon.length === 0 ? " " : icon;
@@ -330,7 +331,7 @@
 	
 	        $("#event-container").effect("highlight", 800);
 	
-	        initDrag(html);
+	        initDrag(html); 
 	    };
 	
 	    /* initialize the external events
@@ -341,6 +342,7 @@
 	    });
 	
 	    $('#add-event').click(function () {
+
 	        var title = $('#title').val(),
 	            priority = $('input:radio[name=priority]:checked').val(),
 	            description = $('#description').val(),
@@ -364,7 +366,7 @@
 	        droppable: true, // this allows things to be dropped onto the calendar !!!
 	
 	        drop: function (date, allDay) { // this function is called when something is dropped
-	
+				alert("alerta agrega")
 	            // retrieve the dropped element's stored Event Object
 	            var originalEventObject = $(this).data('eventObject');
 	
@@ -386,8 +388,18 @@
 	            }
 	
 	        },
-	
+	eventClick: function(calEvent, jsEvent, view) {
+
+        alert('Event: ' + calEvent.title);
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        alert('View: ' + view.name);
+
+        // change the border color just for fun
+        $(this).css('border-color', 'red');
+
+    },
 	        select: function (start, end, allDay) {
+	        	alert("alerta agrega")
 	            var title = prompt('Event Title:');
 	            if (title) {
 	                calendar.fullCalendar('renderEvent', {
@@ -452,6 +464,7 @@
 	        }],
 	
 	        eventRender: function (event, element, icon) {
+	        	
 	            if (!event.description == "") {
 	                element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
 	                    "</span>");
@@ -463,6 +476,7 @@
 	        },
 	
 	        windowResize: function (event, ui) {
+	        	
 	            $('#calendar').fullCalendar('render');
 	        }
 	    });

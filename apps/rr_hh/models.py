@@ -21,7 +21,8 @@ class Empleado(models.Model):
     emp_tel = models.CharField(max_length=12, blank=True)    
     emp_fecing = models.DateField(default=datetime.now)
     emp_fecreg = models.DateField(default=datetime.now,auto_now_add=True)
-    avatar = models.URLField(blank=True,null=True)
+    avatar = models.ImageField(upload_to='foto_personal',blank=True,null=True)
+    #avatar = models.URLField(blank=True,null=True)
     email= models.EmailField(max_length=50, blank=True)    
     cargo = models.ForeignKey(Cargo)
     user = models.OneToOneField(User, unique=True)
@@ -40,6 +41,6 @@ class Programacion(models.Model):
     hor_ing = models.TimeField(blank=True, null=True)
     hor_sal = models.TimeField(blank=True, null=True)    
     hor_fecha = models.DateField()
-    minutosdatencion = models.IntegerField()
+    cantidadPacientes = models.IntegerField()
 
     

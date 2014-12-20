@@ -18,26 +18,30 @@
 				<header>
 					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
 					<h2>Lista de Equipos</h2>
+					<div class="widget-toolbar">
+						<a href="javascript:void(0);" class="btn btn-primary" id="btnExcel">Excel</a>
+					</div>
 				</header>
 				<div>
 					<div class="jarviswidget-editbox">
 					</div>
 					<div class="widget-body no-padding">
-						<div class="table-responsive">
+						<div class="table-responsive" >
+							<div id="dvData">
 							
 							<table class="table">
 							<thead>			                
 								<tr>
-									<th style="display:none;">ID</th>
-									<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Nombre</th><th>Marca</th>
-									<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Modelo</th>
-									<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Serie</th>
-									<th data-hide="phone,tablet"> descripcion</th>
-									
-									<th data-class="expand"></th>
+									<th > Nombre</th>
+									<th > Marca</th>
+									<th > Modelo</th>
+									<th > Serie</th>
+									<th > descripcion</th>			
+									<th ></th>
 									 </tr> </thead> <tbody id = "Tematico">
 							</tbody>
 						</table>
+						</div>
 						</div>
 
 					</div>
@@ -56,7 +60,7 @@
 
 		<!-- NEW COL START -->
 		<article class="col-sm-12 col-md-12 col-lg-6">
-		<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false">
+		<div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false" data-widget-editbutton="false">
 				
 				<header>
 					<span class="widget-icon"> <i class="fa fa-eye-slash"></i> </span>
@@ -81,15 +85,15 @@
 									<label class="col-md-2 control-label" for="select-1">Seleccione </label>
 									<div class="col-md-10">
 										<select class="form-control" id="cb">
-											<option value="0">DNI</option>
-											<option value="1">Nombres</option>
-											<option value="2">Apellidos</option>
+											<option value="0">Nombre</option>
+											<option value="1">Marca</option>
+											<option value="2">Modelo</option>
 										</select> 
 									</div>
 								</div>
 								<div class="well">		
 								<div class="input-group">
-									<input class="form-control" type="text" placeholder="Search..." id="texto">
+									<input class="form-control" type="text" placeholder="Buscar..." id="texto">
 										<div class="input-group-btn">
 											<button class="btn btn-default btn-primary" type="button" id="buscar">
 											<i class="fa fa-search"></i> Buscar
@@ -125,7 +129,7 @@
 				-->
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Registro de Paciente Nuevo </h2>
+					<h2>Registro de Equipo </h2>
 
 				</header>
 
@@ -144,14 +148,14 @@
 
 						<form method="POST" class="smart-form" id = "post-form">
 							<header>
-								Registro de Paciente Nuevo
+								Equipo Auditado
 							</header>
 							
 							<fieldset>	
 							{% csrf_token %}							
 								<section>
 									<label class="label"  >{{form.id}}</label>
-									<label class="label">Nombres:</label>
+									<label class="label">Nombre del Equipo:</label>
 									<label class="input" id="lblnobre">
 										{{form.Nombre}}
 									</label>
@@ -159,29 +163,29 @@
 
 								</section>
 								<section>
-									<label class="label">Apellidos:</label>
+									<label class="label">Marca:</label>
 									<label class="input" id="lblape">
 										{{form.Marca}}
 									</label>
 									<div class="note note-error" id="eApe"></div>
 								</section>
 								<section>
-									<label class="label">DNI</label>
+									<label class="label">Modelo</label>
 									<label class="input" id="lbldni">
 										{{form.Modelo}}
 									</label>
 									<div class="note note-error" id="eDNI"></div>
 								</section>
 								<section>
-									<label class="label">Telefono</label>
+									<label class="label">Serie</label>
 									<label class="input" id="lblTelef">
 										{{form.Serie}}
 									</label>
 									<div class="note note-error" id="eTel"></div>
 								</section>				
 								<section>
-									<label class="label">Observaciones</label>
-									<label class="textarea textarea-expandable"> 							{{form.descripcion}}				
+									<label class="label">Observacion</label>
+									<label class="textarea textarea-expandable"> 							{{form.descripcion}}
 									</label>
 									
 								</section>								
@@ -193,9 +197,6 @@
 								</button>
 								<button type="submit"  class="btn btn-primary" id="btnGuardar">
 									Guardar
-								</button>
-								<button type="button" class="btn btn-default" onclick="window.history.back();">
-									Regresar
 								</button>
 							</footer>
 						</form>
@@ -228,82 +229,65 @@
 </script>
 
 <script >
-
+$("#btnExcel").click(function (e)
+                {
+                    window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#dvData').html()));
+                    e.preventDefault();
+                });
 
 $('#post-form').on('submit', function(event){
     event.preventDefault();     
     create_post();});
     function create_post() { 
     $.ajax({
-        url: '/create-post/',
+        url: '/create-modelo/',
         type : "POST",
         data : $('#post-form').serialize(), 
         success : function(json) 
         {        	
             if (json.errors)
             {
-            	if(json.errors.pac_nombre)
+            	if(json.errors.Nombre)
             	{            		
             		$('#lblnobre').removeClass('input state-success');
             		$('#lblnobre').addClass('input state-error')
-            		$("#eNon").text(json.errors.pac_nombre);
+            		$("#eNon").text(json.errors.Nombre);
             	}else
             	{
             		$('#lblnobre').addClass('input state-success');
             		$("#eNon").text( "");
                 }
-                if(json.errors.pac_apellido)
+                if(json.errors.Marca)
             	{            		
             		$('#lblape').removeClass('input state-success');
             		$('#lblape').addClass('input state-error')
-            		$("#eApe").text(json.errors.pac_apellido);
+            		$("#eApe").text(json.errors.Marca);
             	}else
             	{
             		$('#lblape').addClass('input state-success');
             		$("#eApe").text( "");
                 }
-            	if(json.errors.DNI)
+            	if(json.errors.Modelo)
             	{
             		$('#lbldni').removeClass('input state-success');
             		$('#lbldni').addClass('input state-error')
-            		$("#eDNI").text(json.errors.DNI);
+            		$("#eDNI").text(json.errors.Modelo);
             	}
             	else
             	{
             		$('#lbldni').addClass('input state-success');
             		$("#eDNI").text("");
                 }
-                if(json.errors.pac_direccion)
-            	{            		
-            		$('#lbldirec').removeClass('input state-success');
-            		$('#lbldirec').addClass('input state-error')
-            		$("#eDirec").text(json.errors.pac_direccion);
-            	}else
-            	{
-            		$('#lbldirec').addClass('input state-success');
-            		$("#eDirec").text( "");
-                }
-                if(json.errors.pac_telefono)
+                if(json.errors.Serie)
             	{            		
             		$('#lblTelef').removeClass('input state-success');
             		$('#lblTelef').addClass('input state-error')
-            		$("#eTel").text(json.errors.pac_telefono);
+            		$("#eTel").text(json.errors.Serie);
             	}else
             	{
             		$('#lblTelef').addClass('input state-success');
             		$("#eTel").text( "");
                 }
-                if(json.errors.pac_fecnac)
-            	{            		
-            		$('#lblFecNac').removeClass('input state-success');
-            		$('#lblFecNac').addClass('input state-error')
-            		$("#eFecNac").text(json.errors.pac_fecnac);
-            	}else
-            	{
-            		$('#lblFecNac').addClass('input state-success');
-            		$("#eFecNac").text( "");
-                }
-
             }
             else
             {
@@ -365,7 +349,7 @@ $.ajaxSetup({
 		var seleccion = $(cb).val()
 		$.ajax({ 
 			data: {'texto': opcion, 'seleccion': seleccion},
-			url: '/buscar-ajax/',
+			url: '/buscar-modelo/',
 			type: 'get',
 
 			success: function(data)
@@ -374,128 +358,91 @@ $.ajaxSetup({
 				for (var i=0; i<data.length; i++)
 				{									
 					var tr = '<tr>';
-					var td1 = '<td style="display:none;"><a href="javascript:void(0);">' + data[i].pk + "</a></td>";
-               var td2 = '<td>' + data[i].fields.pac_nombre +'</td>';
-               var td3 = '<td>' + data[i].fields.pac_apellido + '</td>';
-               var td4 = '<td>' + data[i].fields.pac_telefono + '</td>';
-               var td5 = '<td>' + data[i].fields.pac_direccion + '</td>';
-               var td6 = '<td>' + data[i].fields.DNI +'</td>';
-               var td7 = '<td>' + data[i].fields.pac_fecnac + '</td>'
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Modificar</a></td></tr>'
+               var td2 = '<td>' + data[i].fields.Nombre +'</td>';
+               var td3 = '<td>' + data[i].fields.Marca + '</td>';
+               var td4 = '<td>' + data[i].fields.Modelo + '</td>';
+               var td5 = '<td>' + data[i].fields.Serie + '</td>';  var td7 = '<td>' + data[i].fields.descripcion + '</td>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
-               $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 + td7+td8);					
+               $("#Tematico").append(tr  + td2 + td3 + td4 + td5  + td7+td8);					
 					//alert("dddd");
 				}
 
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
+	$(document).on("click",".bg-color-magenta",Cargar);
 	function Cargar()
 	{
-		var opcion=$(this).attr('id')
-		var seleccion = 4		
-		$.ajax({ 
-			data: {'texto': opcion, 'seleccion': seleccion},
-			url: '/buscar-ajax/',
-			type: 'get',
-			success: function(data)
-			{
-				$('#btncambios').removeClass('disabled')
-				$("#codigo").val(data[0].pk)
-				$('#btnGuardar').addClass('disabled')   	
-				$("#nombres").val(data[0].fields.pac_nombre)
-				$("#apellidos").val(data[0].fields.pac_apellido)
-				$("#dni").val(data[0].fields.DNI)
-				$("#direccion").val(data[0].fields.pac_direccion)
-				$("#tel").val(data[0].fields.pac_telefono)
-				$('#fecnac').datepicker('update', data[0].fields.pac_fecnac);
-				$("#observacion").val(data[0].fields.pac_obs)
-				$("#sex").val(data[0].fields.pac_sexo)
-			}
-		});
+		fila = $(this).closest('tr').index();
+		$("#codigo").val($(this).attr('id'))
+		$("#nombres").val($('#Tematico tr:eq('+fila+') td:eq('+1+')').text())		
+		$("#Marca").val($('#Tematico tr:eq('+fila+') td:eq('+2+')').text())	
+		$("#Modelo").val($('#Tematico tr:eq('+fila+') td:eq('+3+')').text())	
+		$("#Serie").val($('#Tematico tr:eq('+fila+') td:eq('+4+')').text())
+		$("#observacion").val($('#Tematico tr:eq('+fila+') td:eq('+5+')').text())
+		$('#btnGuardar').addClass('disabled')
+		$('#btncambios').removeClass('disabled')		
+		
 	}
 $("#btncambios").on("click", guarCambios)
 	function guarCambios()
 	{
 		$.ajax({
-        url: '/modi-post/',
+        url: '/modi-modelo/',
         type : "POST",
         data : $('#post-form').serialize(), 
         success : function(json) 
         {
         	if (json.errors)
             {
-            	if(json.errors.pac_nombre)
+            	if(json.errors.Nombre)
             	{            		
             		$('#lblnobre').removeClass('input state-success');
             		$('#lblnobre').addClass('input state-error')
-            		$("#eNon").text(json.errors.pac_nombre);
+            		$("#eNon").text(json.errors.Nombre);
             	}else
             	{
             		$('#lblnobre').addClass('input state-success');
             		$("#eNon").text( "");
                 }
-                if(json.errors.pac_apellido)
+                if(json.errors.Marca)
             	{            		
             		$('#lblape').removeClass('input state-success');
             		$('#lblape').addClass('input state-error')
-            		$("#eApe").text(json.errors.pac_apellido);
+            		$("#eApe").text(json.errors.Marca);
             	}else
             	{
             		$('#lblape').addClass('input state-success');
             		$("#eApe").text( "");
                 }
-            	if(json.errors.DNI)
+            	if(json.errors.Modelo)
             	{
             		$('#lbldni').removeClass('input state-success');
             		$('#lbldni').addClass('input state-error')
-            		$("#eDNI").text(json.errors.DNI);
+            		$("#eDNI").text(json.errors.Modelo);
             	}
             	else
             	{
             		$('#lbldni').addClass('input state-success');
             		$("#eDNI").text("");
                 }
-                if(json.errors.pac_direccion)
-            	{            		
-            		$('#lbldirec').removeClass('input state-success');
-            		$('#lbldirec').addClass('input state-error')
-            		$("#eDirec").text(json.errors.pac_direccion);
-            	}else
-            	{
-            		$('#lbldirec').addClass('input state-success');
-            		$("#eDirec").text( "");
-                }
-                if(json.errors.pac_telefono)
+                if(json.errors.Serie)
             	{            		
             		$('#lblTelef').removeClass('input state-success');
             		$('#lblTelef').addClass('input state-error')
-            		$("#eTel").text(json.errors.pac_telefono);
+            		$("#eTel").text(json.errors.Serie);
             	}else
             	{
             		$('#lblTelef').addClass('input state-success');
             		$("#eTel").text( "");
                 }
-                if(json.errors.pac_fecnac)
-            	{            		
-            		$('#lblFecNac').removeClass('input state-success');
-            		$('#lblFecNac').addClass('input state-error')
-            		$("#eFecNac").text(json.errors.pac_fecnac);
-            	}else
-            	{
-            		$('#lblFecNac').addClass('input state-success');
-            		$("#eFecNac").text( "");
-                }
-
             }
             else
             {
-            	$('#btncambios').addClass('disabled')
-				$('#btnGuardar').removeClass('disabled') 
             	alert(json.result);
-            	//location.reload();
+            	location.reload();
             }
 				//console.log(json)
 		}

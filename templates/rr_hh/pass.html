@@ -217,7 +217,10 @@
 
 <script >
 
-
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")	
 
 function getCookie(name) {
     var cookieValue = null;
@@ -287,7 +290,7 @@ $.ajaxSetup({
                var td5 = '<td>' + data[i].fields.emp_direccion + '</td>';
                var td6 = '<td>' + data[i].fields.DNI +'</td>';
                
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Modificar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
                $("#Tematico").append(tr + td1 + td2 + td3 + td4 + td5 + td6 +td8);					
@@ -297,8 +300,8 @@ $.ajaxSetup({
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
-	function Cargar()
+	$(document).on("click",".bg-color-magenta",cargamodi);
+	function cargamodi()
 	{
 		var opcion=$(this).attr('id')
 		var seleccion = 6	

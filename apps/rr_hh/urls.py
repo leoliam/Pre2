@@ -16,6 +16,12 @@ urlpatterns = patterns('',
 	url(r'^create-horario/$', 'apps.rr_hh.views.CreateHorario' , name='createHorario'),
 	url(r'^buscar-horario/$', 'apps.rr_hh.views.BuscarHorario' , name='buscarHorario'),
 	url(r'^home-gestionHorario/$', 'apps.rr_hh.views.GestionHorario' , name='GestionHorario'),
+	url(r'^modi-horario/$', 'apps.rr_hh.views.ModiHorario' , name='modiHoario'),
+	url(r'^reporte-horario/$', 'apps.rr_hh.views.ReporteHorario' , name='ReporteHorario'),
+	url(r'^buscar-empleado/$', 'apps.rr_hh.views.BuscarEmpleado' , name='BuscarEmpleado'),
+	url(r'^reporte/horario/(?P<value>[^/]+)/(?P<opcion>[^/]+)/(?P<idempleado>[^/]+)/$', 'apps.rr_hh.views.crear_reporte_horario', name='ReporteHorarioServicio'),
+
+	
 
 
 )

@@ -96,7 +96,7 @@
 		<article class="col-sm-12 col-md-12 col-lg-6">
 
 			<!-- Widget ID (each widget will need unique ID)-->
-			<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+			<div class="jarviswidget" id="wid-id-2" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
 				<!-- widget options:
 				usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -181,6 +181,10 @@
 </section>
 <script >
 
+$(document).off( "click", ".btn-danger" )
+$(document).off( "click", ".bg-color-magenta")
+$(document).off( "click", ".bg-color-red")
+$(document).off( "click", ".bg-color-blue")
 
 $('#post-form').on('submit', function(event){
     event.preventDefault();     
@@ -275,7 +279,7 @@ $.ajaxSetup({
 					var td1 = '<td>' + data[i].pk + '</td>';
                var td2 = '<td>' + data[i].fields.cargo_nom +'</td>';
                var td3 = '<td>' + data[i].fields.cargo_descripcion +'</td>';
-               var td8 = '<td><a href="#" role="button" class="btn btn-primary btn-xs" data-toggle="modal" id="' + data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i> &nbsp;&nbsp;Modificar</a></td></tr>'
+               var td8 = '<td><a href="javascript:void(0);" class="btn bg-color-magenta txt-color-white btn-circle" id="'+ data[i].pk + '" data-name="'+data[i].pk+'"><i class="fa fa-pencil"></i></a></td></tr>'
                
 
                $("#Tematico").append(tr + td1 + td2 +td3+td8);					
@@ -284,24 +288,19 @@ $.ajaxSetup({
 			}
 		});
 	}
-	$(document).on("click",".btn-xs",Cargar);
+	$(document).on("click",".bg-color-magenta",Cargar);
 	function Cargar()
 	{
-		var opcion=$(this).attr('id')
-		$.ajax({ 
-			data: {'texto': opcion,'seleccion': 1},
-			url: '/buscar-cargo/',
-			type: 'get',
-			success: function(data)
-			{
-				$('#btncambios').removeClass('disabled')
-				$("#codigo").val(data[0].pk)
-				$('#btnGuardar').addClass('disabled')   	
-				$("#nombres").val(data[0].fields.cargo_nom)
-				$("#observacion").val(data[0].fields.cargo_descripcion)
-			}
-		});
+		fila = $(this).closest('tr').index();
+		esto=$(this)
+		$('#btncambios').removeClass('disabled')
+		$("#codigo").val($(this).attr('id'))
+		$('#btnGuardar').addClass('disabled')   	
+		$("#nombres").val($('#Tematico tr:eq('+fila+') td:eq('+1+')').text())
+		$("#observacion").val($('#Tematico tr:eq('+fila+') td:eq('+2+')').text())
+			
 	}
+	
 $("#btncambios").on("click", guarCambios)
 	function guarCambios()
 	{
